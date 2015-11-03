@@ -30,3 +30,10 @@ spectrophotometric_data <- readWorksheet(spectrophotometric_data_workbook, sheet
 #    Functions to calculate the necessary values
 #
 #########################################################
+
+# Calculate the quadrature error
+get.quad.error <- function(error.1, error.2) {
+  error <- sqrt(error.1^2 + error.2^2)
+  return(error);
+}
+
