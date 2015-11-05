@@ -3,17 +3,19 @@
 #         Install the needed dependancies
 #
 #########################################################
-if(require("XLConnect") && require("ggplot2")){
+if(require("XLConnect") && require("ggplot2") && require("scatterplot3d")){
   print("XLConnect and ggplot2 are loaded correctly")
 } else {
   print("Trying to install XLConnect")
   install.packages("XLConnect")
   print("Trying to install ggplot2")
   install.packages("ggplot2")
-  if(require("XLConnect") && require("ggplot2")){
-    print("XLConnect are installed and loaded")
+  print("Trying to install scatterplot3d")
+  install.packages("scatterplot3d")
+  if(require("XLConnect") && require("ggplot2") && require("scatterplot3d")){
+    print("XLConnect, ggplot2, and scatterplot3d are installed and loaded")
   } else {
-    stop("could not install XLConnect, ggplot2")
+    stop("could not install XLConnect, ggplot2, scatterplot3d")
   }
 }
 
@@ -77,3 +79,18 @@ graph.sigmaI.re <- function(sheet, res, colorcode, shapecode) {
 #
 ##########################################################
 
+#####################
+#
+#  3D Plot
+#
+#####################
+field.sigma <- spectrophotometric_data$FieldGalaxies$LSIGMA_COR
+field.sigma.error <- spectrophotometric_data$FieldGalaxies$E_LSIGMA
+field.ie <- spectrophotometric_data$FieldGalaxies$LIEJB_DEV
+field.ie.error <- spectrophotometric_data$FieldGalaxies$e_lIeJB_DEV
+field.re <- spectrophotometric_data$FieldGalaxies$LREJB_KPC_DEV
+field.re.error <- spectrophotometric_data$FieldGalaxies$E_LRE_DEVAF814W
+
+scatterplot3d(field.ie, field.re, field.sigma, angle = 115, 
+              xlab = "Log Lr", ylab = "Log Sigma", zlab = "Log Re",
+              color = "blue", type = "p", pch = 16)
