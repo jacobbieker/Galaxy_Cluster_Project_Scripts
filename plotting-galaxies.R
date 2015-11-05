@@ -91,6 +91,37 @@ field.ie.error <- spectrophotometric_data$FieldGalaxies$e_lIeJB_DEV
 field.re <- spectrophotometric_data$FieldGalaxies$LREJB_KPC_DEV
 field.re.error <- spectrophotometric_data$FieldGalaxies$E_LRE_DEVAF814W
 
-scatterplot3d(field.ie, field.re, field.sigma, angle = 115, 
-              xlab = "Log Lr", ylab = "Log Sigma", zlab = "Log Re",
+fundamental.plane <- scatterplot3d(field.ie, field.re, field.sigma, angle = 135, 
+              xlab = "Log Lr", ylab = "Log Sigma", zlab = "Log Re", main = "Fundamental Plane",
               color = "blue", type = "p", pch = 16)
+
+ms0451p6m0305.sigma <- spectrophotometric_data$MS0451p6m0305member$LSIGMA_COR
+ms0451p6m0305.sigma.error <- spectrophotometric_data$MS0451p6m0305member$E_LSIGMA
+ms0451p6m0305.ie <- spectrophotometric_data$MS0451p6m0305member$LIEJB_DEV
+ms0451p6m0305.ie.error <- spectrophotometric_data$MS0451p6m0305member$e_lIeJB_DEV
+ms0451p6m0305.re <- spectrophotometric_data$MS0451p6m0305member$LREJB_KPC_DEV
+ms0451p6m0305.re.error <- spectrophotometric_data$MS0451p6m0305member$E_LRE_DEVAF814W
+
+print(length(ms0451p6m0305.sigma))
+print(length(ms0451p6m0305.re))
+print(length(ms0451p6m0305.ie))
+
+fundamental.plane$points3d(ms0451p6m0305.ie, ms0451p6m0305.re, ms0451p6m0305.sigma)
+
+RXJ0152p7m1357.sigma <- spectrophotometric_data$RXJ0152p7m1357member$LSIGMA_COR
+RXJ0152p7m1357.sigma.error <- spectrophotometric_data$RXJ0152p7m1357member$E_LSIGMA
+RXJ0152p7m1357.ie <- spectrophotometric_data$RXJ0152p7m1357member$LIEJB_DEV
+RXJ0152p7m1357.ie.error <- spectrophotometric_data$RXJ0152p7m1357member$e_lIeJB_DEV
+RXJ0152p7m1357.re <- spectrophotometric_data$RXJ0152p7m1357member$LREJB_KPC_DEV
+RXJ0152p7m1357.re.error <- spectrophotometric_data$RXJ0152p7m1357member$E_LRE_DEVAF814W
+
+fundamental.plane$points3d(RXJ0152p7m1357.ie, RXJ0152p7m1357.re, RXJ0152p7m1357.sigma)
+
+RXJ0152p7m1357.sigma <- spectrophotometric_data$RXJ1226p9p3332member$LSIGMA_COR
+RXJ0152p7m1357.sigma.error <- spectrophotometric_data$RXJ0152p7m1357member$E_LSIGMA
+RXJ0152p7m1357.ie <- spectrophotometric_data$RXJ0152p7m1357member$LIEJB_DEV
+RXJ0152p7m1357.ie.error <- spectrophotometric_data$RXJ0152p7m1357member$e_lIeJB_DEV
+RXJ0152p7m1357.re <- spectrophotometric_data$RXJ0152p7m1357member$LREJB_KPC_DEV
+RXJ0152p7m1357.re.error <- spectrophotometric_data$RXJ0152p7m1357member$E_LRE_DEVAF814W
+
+fundamental.plane$points3d(RXJ0152p7m1357.ie, RXJ0152p7m1357.re, RXJ0152p7m1357.sigma)
