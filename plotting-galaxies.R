@@ -49,7 +49,8 @@ get.quad.error <- function(error.1, error.2) {
 graph.sigma.mass <- function(sheet, colorcode, shapecode) {
   re.data <- sheet$LREJB_KPC_DEV
   re.error <- sheet$E_LRE_DEVAF814W
-  sigma.data <- sheet$
+  sigma.data <- sheet$LSIGMA_COR # log10(sigma) in km/s
+  sigma.error <- sheet$E_LSIGMA # Error in Sigma
 }
 
 # Returns the scatter points of log(re) vs log(Mass) to plot with ggplot2
