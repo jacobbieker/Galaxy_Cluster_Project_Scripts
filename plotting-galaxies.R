@@ -117,11 +117,11 @@ RXJ0152p7m1357.re.error <- spectrophotometric_data$RXJ0152p7m1357member$E_LRE_DE
 
 fundamental.plane$points3d(RXJ0152p7m1357.ie, RXJ0152p7m1357.re, RXJ0152p7m1357.sigma)
 
-RXJ0152p7m1357.sigma <- spectrophotometric_data$RXJ1226p9p3332member$LSIGMA_COR
-RXJ0152p7m1357.sigma.error <- spectrophotometric_data$RXJ0152p7m1357member$E_LSIGMA
-RXJ0152p7m1357.ie <- spectrophotometric_data$RXJ0152p7m1357member$LIEJB_DEV
-RXJ0152p7m1357.ie.error <- spectrophotometric_data$RXJ0152p7m1357member$e_lIeJB_DEV
-RXJ0152p7m1357.re <- spectrophotometric_data$RXJ0152p7m1357member$LREJB_KPC_DEV
-RXJ0152p7m1357.re.error <- spectrophotometric_data$RXJ0152p7m1357member$E_LRE_DEVAF814W
+RXJ1226p9p3332.sigma <- spectrophotometric_data$RXJ1226p9p3332member$LSIGMA_COR
+RXJ1226p9p3332.sigma.error <- spectrophotometric_data$RXJ1226p9p3332member$E_LSIGMA
+RXJ1226p9p3332.ie <- spectrophotometric_data$RXJ1226p9p3332member$LIEJB_DEV
+RXJ1226p9p3332.ie.error <- spectrophotometric_data$RXJ1226p9p3332member$e_lIeJB_DEV
+RXJ1226p9p3332.re <- spectrophotometric_data$RXJ1226p9p3332member$LREJB_KPC_DEV
+RXJ1226p9p3332.re.error <- spectrophotometric_data$RXJ1226p9p3332member$E_LRE_DEVAF814W
 
-fundamental.plane$points3d(RXJ0152p7m1357.ie, RXJ0152p7m1357.re, RXJ0152p7m1357.sigma)
+fundamental.plane$points3d(RXJ1226p9p3332.ie, RXJ1226p9p3332.re, RXJ1226p9p3332.sigma)
