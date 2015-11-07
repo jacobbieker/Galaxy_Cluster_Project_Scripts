@@ -125,3 +125,9 @@ RXJ1226p9p3332.re <- spectrophotometric_data$RXJ1226p9p3332member$LREJB_KPC_DEV
 RXJ1226p9p3332.re.error <- spectrophotometric_data$RXJ1226p9p3332member$E_LRE_DEVAF814W
 
 fundamental.plane$points3d(RXJ1226p9p3332.ie, RXJ1226p9p3332.re, RXJ1226p9p3332.sigma)
+
+coma.re <- spectrophotometric_data$Coma$lreJB_kpc_DEV
+coma.io <- spectrophotometric_data$Coma$lMass_DEV
+coma.sigma <- spectrophotometric_data$Coma$lsigma_cor
+
+fundamental.plane$points3d(coma.ie, coma.re, coma.sigma)
