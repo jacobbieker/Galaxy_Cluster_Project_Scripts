@@ -91,10 +91,18 @@ field.ie.error <- spectrophotometric_data$FieldGalaxies$e_lIeJB_DEV
 field.re <- spectrophotometric_data$FieldGalaxies$LREJB_KPC_DEV
 field.re.error <- spectrophotometric_data$FieldGalaxies$E_LRE_DEVAF814W
 
-fundamental.plane <- scatterplot3d(field.ie, field.re, field.sigma, angle = 135, 
-              xlab = "Log Lr", ylab = "Log Sigma", zlab = "Log Re", main = "Fundamental Plane",
-              color = "blue", type = "p", pch = 16)
+coma.re <- spectrophotometric_data$Coma$lreJB_kpc_DEV
+coma.ie <- spectrophotometric_data$Coma$lMass_DEV
+coma.sigma <- spectrophotometric_data$Coma$lsigma_cor
 
+fundamental.plane <- scatterplot3d(coma.ie, coma.re, coma.sigma, angle = 45, 
+              xlab = "Log Lr", ylab = "Log Sigma", zlab = "Log Re", main = "Fundamental Plane",
+              color = "blue", type = "p", pch = 16,
+              xlim = c(0, 13), ylim = c(-2, 2), zlim = c(1.4, 2.8))
+
+fundamental.plane$points3d(field.ie, field.re, field.sigma, col="red", type="p", pch=16)
+
+"
 ms0451p6m0305.sigma <- spectrophotometric_data$MS0451p6m0305member$LSIGMA_COR
 ms0451p6m0305.sigma.error <- spectrophotometric_data$MS0451p6m0305member$E_LSIGMA
 ms0451p6m0305.ie <- spectrophotometric_data$MS0451p6m0305member$LIEJB_DEV
@@ -125,9 +133,4 @@ RXJ1226p9p3332.re <- spectrophotometric_data$RXJ1226p9p3332member$LREJB_KPC_DEV
 RXJ1226p9p3332.re.error <- spectrophotometric_data$RXJ1226p9p3332member$E_LRE_DEVAF814W
 
 fundamental.plane$points3d(RXJ1226p9p3332.ie, RXJ1226p9p3332.re, RXJ1226p9p3332.sigma)
-
-coma.re <- spectrophotometric_data$Coma$lreJB_kpc_DEV
-coma.io <- spectrophotometric_data$Coma$lMass_DEV
-coma.sigma <- spectrophotometric_data$Coma$lsigma_cor
-
-fundamental.plane$points3d(coma.ie, coma.re, coma.sigma)
+"
