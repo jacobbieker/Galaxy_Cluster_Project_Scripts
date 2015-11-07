@@ -98,7 +98,8 @@ coma.sigma <- spectrophotometric_data$Coma$lsigma_cor
 fundamental.plane <- scatterplot3d(coma.ie, coma.re, coma.sigma, angle = 45, 
               xlab = "Log Lr", ylab = "Log Sigma", zlab = "Log Re", main = "Fundamental Plane",
               color = "blue", type = "p", pch = 16,
-              xlim = c(0, 13), ylim = c(-2, 2), zlim = c(1.4, 2.8))
+              xlim = c(0, 13), ylim = c(-2, 2), zlim = c(1.4, 2.8),
+              axis = TRUE, tick.marks = TRUE, box = FALSE)
 
 fundamental.plane$points3d(field.ie, field.re, field.sigma, col="red", type="p", pch=16)
 
