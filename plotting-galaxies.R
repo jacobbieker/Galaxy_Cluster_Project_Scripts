@@ -83,25 +83,51 @@ graph.sigmaI.re <- function(sheet, res, colorcode, shapecode) {
 #
 #  3D Plot
 #
+#  Yellow is Coma, small red is z < .8, big is z > .8, Sample 2 = blue x <.8, 
 #####################
-field.sigma <- spectrophotometric_data$FieldGalaxies$LSIGMA_COR
-field.sigma.error <- spectrophotometric_data$FieldGalaxies$E_LSIGMA
-field.ie <- spectrophotometric_data$FieldGalaxies$LIEJB_DEV
-field.ie.error <- spectrophotometric_data$FieldGalaxies$e_lIeJB_DEV
-field.re <- spectrophotometric_data$FieldGalaxies$LREJB_KPC_DEV
-field.re.error <- spectrophotometric_data$FieldGalaxies$E_LRE_DEVAF814W
+field.sample.one.LORDSHFT.data <- subset(spectrophotometric_data$FieldGalaxies, REDSHIFT < 0.8 & SAMPLE == 1);
+field.sample.one.HIRDSHFT.data <- subset(spectrophotometric_data$FieldGalaxies, REDSHIFT > 0.8 & SAMPLE == 1);
+
+field.sample.two.LORDSHFT.data <- subset(spectrophotometric_data$FieldGalaxies, REDSHIFT < 0.8 & SAMPLE == 2);
+field.sample.two.HIRDSHFT.data <- subset(spectrophotometric_data$FieldGalaxies, REDSHIFT > 0.8 & SAMPLE == 2);
+
+field.one.LO.sigma <- field.sample.one.LORDSHFT.data$LSIGMA_COR
+field.one.HI.sigma <- field.sample.one.HIRDSHFT.data$LSIGMA_COR
+
+field.two.LO.sigma <- field.sample.two.LORDSHFT.data$LSIGMA_COR
+field.two.HI.sigma <- field.sample.two.HIRDSHFT.data$LSIGMA_COR
+
+
+field.one.LO.sigma.error <- field.sample.one.LORDSHFT.data$E_LSIGMA
+field.one.HI.sigma.error <- field.sample.one.HIRDSHFT.data$E_LSIGMA
+field.two.LO.sigma.error <- field.sample.two.LORDSHFT.data$E_LSIGMA
+field.two.HI.sigma.error <- field.sample.two.HIRDSHFT.data$E_LSIGMA
+
+field.one.LO.ie <- field.sample.one.LORDSHFT.data$LIEJB_DEV
+field.one.HI.ie <- field.sample.one.HIRDSHFT.data$LIEJB_DEV
+field.two.LO.ie <- field.sample.two.LORDSHFT.data$LIEJB_DEV
+field.two.HI.ie <- field.sample.two.HIRDSHFT.data$LIEJB_DEV
+
+field.one.LO.re <- field.sample.one.LORDSHFT.data$LREJB_KPC_DEV
+field.one.HI.re <- field.sample.one.HIRDSHFT.data$LREJB_KPC_DEV
+field.two.LO.re <- field.sample.two.LORDSHFT.data$LREJB_KPC_DEV
+field.two.HI.re <- field.sample.two.HIRDSHFT.data$LREJB_KPC_DEV
+
 
 coma.re <- spectrophotometric_data$Coma$lreJB_kpc_DEV
-coma.ie <- spectrophotometric_data$Coma$lMass_DEV
+coma.ie <- spectrophotometric_data$Coma$lIeJB_cor
 coma.sigma <- spectrophotometric_data$Coma$lsigma_cor
 
-fundamental.plane <- scatterplot3d(coma.ie, coma.re, coma.sigma, angle = 45, 
-              xlab = "Log Lr", ylab = "Log Sigma", zlab = "Log Re", main = "Fundamental Plane",
-              color = "blue", type = "p", pch = 16,
-              xlim = c(0, 13), ylim = c(-2, 2), zlim = c(1.4, 2.8),
-              axis = TRUE, tick.marks = TRUE, box = FALSE)
+fundamental.plane <- scatterplot3d(field.one.LO.sigma, field.one.LO.ie, field.one.LO.re, angle = 135, 
+              xlab = "Log Sigma", ylab = "Log Ie", zlab = "Log Re", main = "Fundamental Plane",
+              color = "red", type = "p", pch = 16, cex.symbols = 0.6,
+              xlim = c(0.5, 2.1), ylim = c(-2, 2), zlim = c(0, 2.2),
+              axis = TRUE, tick.marks = TRUE, box = TRUE)
+fundamental.plane$points3d(coma.sigma, coma.ie, coma.re, col="yellow", type="p", pch=16, cex=0.5)
+fundamental.plane$points3d(field.one.HI.sigma, field.one.HI.ie, field.one.HI.re, col="red", type="p", pch=16)
+fundamental.plane$points3d(field.two.HI.sigma, field.two.HI.ie, field.two.HI.re, col="blue", type="p", pch=16)
+fundamental.plane$points3d(field.two.LO.sigma, field.two.LO.ie, field.two.LO.re, col="blue", type="p", pch=16, cex = 0.6)
 
-fundamental.plane$points3d(field.ie, field.re, field.sigma, col="red", type="p", pch=16)
 
 "
 ms0451p6m0305.sigma <- spectrophotometric_data$MS0451p6m0305member$LSIGMA_COR
