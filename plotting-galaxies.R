@@ -7,7 +7,7 @@ if(require("XLConnect") && require("ggplot2") && require("scatterplot3d")){
   print("XLConnect and ggplot2 are loaded correctly")
 } else {
   print("Trying to install XLConnect")
-  install.packages("XLConnect")
+  install.packages("XLConnect", dependencies = TRUE)
   print("Trying to install ggplot2")
   install.packages("ggplot2")
   print("Trying to install scatterplot3d")
@@ -161,3 +161,11 @@ RXJ1226p9p3332.re.error <- spectrophotometric_data$RXJ1226p9p3332member$E_LRE_DE
 
 fundamental.plane$points3d(RXJ1226p9p3332.ie, RXJ1226p9p3332.re, RXJ1226p9p3332.sigma)
 "
+
+###########################################
+#
+#
+#     Getting the correleation and errors for the different plots
+#    
+#
+############################################
