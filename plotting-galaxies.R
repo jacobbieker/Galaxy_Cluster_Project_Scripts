@@ -163,7 +163,7 @@ lsigma.vs.logml <- ggplot() +
   geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV, color = "purple")) +
   geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV, color = "yellow")) +
   geom_smooth(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV, method = "lm", se = FALSE)) +
-  xlab('(lg(sigma)') +
-  ylab('(log(M/Lb) [M/L]')
+  xlab('log(sigma)') +
+  ylab('log(M/Lb) [M/L]')
   
 lsigma.vs.logml
