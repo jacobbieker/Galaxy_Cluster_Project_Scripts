@@ -94,7 +94,6 @@ field.one.HI.sigma <- field.sample.one.HIRDSHFT.data$LSIGMA_COR
 field.two.LO.sigma <- field.sample.two.LORDSHFT.data$LSIGMA_COR
 field.two.HI.sigma <- field.sample.two.HIRDSHFT.data$LSIGMA_COR
 
-
 field.one.LO.sigma.error <- field.sample.one.LORDSHFT.data$E_LSIGMA
 field.one.HI.sigma.error <- field.sample.one.HIRDSHFT.data$E_LSIGMA
 field.two.LO.sigma.error <- field.sample.two.LORDSHFT.data$E_LSIGMA
@@ -152,3 +151,18 @@ fundamental_plane_faceon <- ggplot() +
   ylab('(1.3log<I>e + 0.82log(sigma))/1.54')
 
 fundamental_plane_faceon
+
+##################
+# Velocity Dispersion vs log M/L
+##################
+
+lsigma.vs.logml <- ggplot() +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV, color = "red")) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV, color = "blue")) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV, color = "green")) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV, color = "purple")) +
+  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV, color = "yello")) +
+  xlab('(lg(sigma)') +
+  ylab('(log(M/Lb) [M/L]')
+  
+lsigma.vs.logml
