@@ -129,7 +129,7 @@ fundamental.plane$points3d(field.two.HI.sigma, field.two.HI.ie, field.two.HI.re,
 fundamental.plane$points3d(field.two.LO.sigma, field.two.LO.ie, field.two.LO.re, col="blue", type="p", pch=16, cex = 0.6)
 
 
-
+"
 ms0451p6m0305.sigma <- spectrophotometric_data$MS0451p6m0305member$LSIGMA_COR
 ms0451p6m0305.sigma.error <- spectrophotometric_data$MS0451p6m0305member$E_LSIGMA
 ms0451p6m0305.ie <- spectrophotometric_data$MS0451p6m0305member$LIEJB_DEV
@@ -160,7 +160,7 @@ RXJ1226p9p3332.re <- spectrophotometric_data$RXJ1226p9p3332member$LREJB_KPC_DEV
 RXJ1226p9p3332.re.error <- spectrophotometric_data$RXJ1226p9p3332member$E_LRE_DEVAF814W
 
 fundamental.plane$points3d(RXJ1226p9p3332.ie, RXJ1226p9p3332.re, RXJ1226p9p3332.sigma)
-
+"
 
 ###########################################
 #
@@ -173,3 +173,31 @@ fundamental.plane$points3d(RXJ1226p9p3332.ie, RXJ1226p9p3332.re, RXJ1226p9p3332.
 coma.all <- (-0.82*coma.ie + 2.22*coma.re + 1.3*coma.sigma)/2.70;
 coma.all2 <- (1.3*coma.ie + 0.82*coma.sigma)/1.54;
 print(cor(coma.all, coma.all2));
+
+coma.planeedge = (1.3*coma.sigma + -0.82*coma.ie);
+print(cor(coma.planeedge, coma.re))
+
+###########################################################################################
+#
+#
+#    Creating the stacked plots for publication
+#
+#
+###########################################################################################
+
+##########################
+# Fundamental Plane graphs
+##########################
+
+coma.data <- spectrophotometric_data$Coma
+
+fundamental_plane_headon <- ggplot() +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV), color = "red")) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV), color = "purple")) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV), color = "blue")) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV), color = "green")) +
+  geom_point(data = coma.data, aes(x = lreJB_kpc_DEV, y = (1.3*lsigma_cor)-(0.82*lIeJB_cor), color = "yellow")) +
+  xlab('logre [kpc]') +
+  ylab('1.3log(sigma) - 0.82log<I>')
+
+fundamental_plane_headon
