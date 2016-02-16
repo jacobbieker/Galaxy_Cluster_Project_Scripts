@@ -148,7 +148,7 @@ fundamental_plane_faceon <- ggplot() +
   geom_point(data = field.sample.two.LORDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54, color = "green")) +
   geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54, color = "yellow")) +
   geom_smooth(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54, method = "lm", se = FALSE)) +
-  xlab('logre [kpc]') +
-  ylab('1.3log(sigma) - 0.82log<I>')
+  xlab('(2.22logre - 0.82log<I>e + 1.3log(sigma))/2.70') +
+  ylab('(1.3log<I>e + 0.82log(sigma))/1.54')
 
 fundamental_plane_faceon
