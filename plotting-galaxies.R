@@ -141,14 +141,14 @@ fundamental_plane_headon <- ggplot() +
 fundamental_plane_headon
 
 # Face On Graph
-fundamental_plane_headon <- ggplot() +
-  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV), color = "red")) +
-  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV), color = "purple")) +
-  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV), color = "blue")) +
-  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV), color = "green")) +
-  geom_point(data = coma.data, aes(x = lreJB_kpc_DEV, y = (1.3*lsigma_cor)-(0.82*lIeJB_cor), color = "yellow")) +
-  geom_smooth(data = coma.data, aes(x = lreJB_kpc_DEV, y = (1.3*lsigma_cor)-(0.82*lIeJB_cor), method = "lm", se = FALSE) +
+fundamental_plane_faceon <- ggplot() +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54, color = "red")) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54, color = "purple")) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54, color = "blue")) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54, color = "green")) +
+  geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54, color = "yellow")) +
+  geom_smooth(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54, method = "lm", se = FALSE)) +
   xlab('logre [kpc]') +
   ylab('1.3log(sigma) - 0.82log<I>')
 
-fundamental_plane_headon
+fundamental_plane_faceon
