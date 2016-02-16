@@ -80,9 +80,6 @@ graph.sigmaI.re <- function(sheet, res, colorcode, shapecode) {
 ##########################################################
 
 #####################
-#
-#  3D Plot
-#
 #  Yellow is Coma, small red is z < .8, big is z > .8, Sample 2 = blue x <.8, 
 #####################
 field.sample.one.LORDSHFT.data <- subset(spectrophotometric_data$FieldGalaxies, REDSHIFT < 0.8 & SAMPLE == 1);
@@ -113,69 +110,10 @@ field.one.HI.re <- field.sample.one.HIRDSHFT.data$LREJB_KPC_DEV
 field.two.LO.re <- field.sample.two.LORDSHFT.data$LREJB_KPC_DEV
 field.two.HI.re <- field.sample.two.HIRDSHFT.data$LREJB_KPC_DEV
 
-
-coma.re <- spectrophotometric_data$Coma$lreJB_kpc_DEV
-coma.ie <- spectrophotometric_data$Coma$lIeJB_cor
-coma.sigma <- spectrophotometric_data$Coma$lsigma_cor
-
-fundamental.plane <- scatterplot3d(field.one.LO.sigma, field.one.LO.ie, field.one.LO.re, angle = 135, 
-              xlab = "Log Sigma", ylab = "Log Ie", zlab = "Log Re", main = "Fundamental Plane",
-              color = "red", type = "p", pch = 16, cex.symbols = 0.6,
-              xlim = c(0.5, 2.1), ylim = c(-2, 2), zlim = c(0, 2.2),
-              axis = TRUE, tick.marks = TRUE, box = TRUE)
-fundamental.plane$points3d(coma.sigma, coma.ie, coma.re, col="yellow", type="p", pch=16, cex=0.5)
-fundamental.plane$points3d(field.one.HI.sigma, field.one.HI.ie, field.one.HI.re, col="red", type="p", pch=16)
-fundamental.plane$points3d(field.two.HI.sigma, field.two.HI.ie, field.two.HI.re, col="blue", type="p", pch=16)
-fundamental.plane$points3d(field.two.LO.sigma, field.two.LO.ie, field.two.LO.re, col="blue", type="p", pch=16, cex = 0.6)
-
-
-"
-ms0451p6m0305.sigma <- spectrophotometric_data$MS0451p6m0305member$LSIGMA_COR
-ms0451p6m0305.sigma.error <- spectrophotometric_data$MS0451p6m0305member$E_LSIGMA
-ms0451p6m0305.ie <- spectrophotometric_data$MS0451p6m0305member$LIEJB_DEV
-ms0451p6m0305.ie.error <- spectrophotometric_data$MS0451p6m0305member$e_lIeJB_DEV
-ms0451p6m0305.re <- spectrophotometric_data$MS0451p6m0305member$LREJB_KPC_DEV
-ms0451p6m0305.re.error <- spectrophotometric_data$MS0451p6m0305member$E_LRE_DEVAF814W
-
-print(length(ms0451p6m0305.sigma))
-print(length(ms0451p6m0305.re))
-print(length(ms0451p6m0305.ie))
-
-fundamental.plane$points3d(ms0451p6m0305.ie, ms0451p6m0305.re, ms0451p6m0305.sigma)
-
-RXJ0152p7m1357.sigma <- spectrophotometric_data$RXJ0152p7m1357member$LSIGMA_COR
-RXJ0152p7m1357.sigma.error <- spectrophotometric_data$RXJ0152p7m1357member$E_LSIGMA
-RXJ0152p7m1357.ie <- spectrophotometric_data$RXJ0152p7m1357member$LIEJB_DEV
-RXJ0152p7m1357.ie.error <- spectrophotometric_data$RXJ0152p7m1357member$e_lIeJB_DEV
-RXJ0152p7m1357.re <- spectrophotometric_data$RXJ0152p7m1357member$LREJB_KPC_DEV
-RXJ0152p7m1357.re.error <- spectrophotometric_data$RXJ0152p7m1357member$E_LRE_DEVAF814W
-
-fundamental.plane$points3d(RXJ0152p7m1357.ie, RXJ0152p7m1357.re, RXJ0152p7m1357.sigma)
-
-RXJ1226p9p3332.sigma <- spectrophotometric_data$RXJ1226p9p3332member$LSIGMA_COR
-RXJ1226p9p3332.sigma.error <- spectrophotometric_data$RXJ1226p9p3332member$E_LSIGMA
-RXJ1226p9p3332.ie <- spectrophotometric_data$RXJ1226p9p3332member$LIEJB_DEV
-RXJ1226p9p3332.ie.error <- spectrophotometric_data$RXJ1226p9p3332member$e_lIeJB_DEV
-RXJ1226p9p3332.re <- spectrophotometric_data$RXJ1226p9p3332member$LREJB_KPC_DEV
-RXJ1226p9p3332.re.error <- spectrophotometric_data$RXJ1226p9p3332member$E_LRE_DEVAF814W
-
-fundamental.plane$points3d(RXJ1226p9p3332.ie, RXJ1226p9p3332.re, RXJ1226p9p3332.sigma)
-"
-
-###########################################
-#
-#
-#     Getting the correleation and errors for the different plots
-#    
-#
-############################################
-
-coma.all <- (-0.82*coma.ie + 2.22*coma.re + 1.3*coma.sigma)/2.70;
-coma.all2 <- (1.3*coma.ie + 0.82*coma.sigma)/1.54;
-print(cor(coma.all, coma.all2));
-
-coma.planeedge = (1.3*coma.sigma + -0.82*coma.ie);
-print(cor(coma.planeedge, coma.re))
+coma.data <- spectrophotometric_data$Coma
+coma.re <- coma.data$lreJB_kpc_DEV
+coma.ie <- coma.data$lIeJB_cor
+coma.sigma <- coma.data$lsigma_cor
 
 ###########################################################################################
 #
@@ -188,8 +126,6 @@ print(cor(coma.planeedge, coma.re))
 ##########################
 # Fundamental Plane graphs
 ##########################
-
-coma.data <- spectrophotometric_data$Coma
 
 fundamental_plane_headon <- ggplot() +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV), color = "red")) +
