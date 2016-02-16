@@ -179,6 +179,7 @@ lsigma.vs.logml <- ggplot() +
   geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "black", size=4, shape=21) +
   xlab('log(σ)') +
   ylab('log(M/Lb) [M/L]') +
+  # Currently calculated by coef(lm(data=coma.data, lML_JB_DEV ~ lsigma_cor))
   geom_abline(intercept = -0.8569, slope=0.7535)
   
 lsigma.vs.logml
