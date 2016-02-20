@@ -166,7 +166,13 @@ fundamental_plane_faceon
 # Velocity Dispersion vs log M/L
 ##################
 
-lsigma.vs.logml <- ggplot() +
+lsigma.vs.logml <- ggplot() + theme_bw() +
+  theme(
+    panel.background = element_rect(color = "white", size = 2),
+    panel.border = element_rect(fill = NA, colour = "black", size = 1),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank()
+  ) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "red", size=5) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "black", size=5, shape=21) +
   geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "red", size=2) +
@@ -183,3 +189,5 @@ lsigma.vs.logml <- ggplot() +
   geom_abline(intercept = -0.8569, slope=0.7535)
   
 lsigma.vs.logml
+
+library(reshape2)
