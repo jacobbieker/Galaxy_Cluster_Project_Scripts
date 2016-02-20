@@ -168,10 +168,8 @@ fundamental_plane_faceon
 
 lsigma.vs.logml <- ggplot() + theme_bw() +
   theme(
-    panel.background = element_rect(color = "white", size = 2),
     panel.border = element_rect(fill = NA, colour = "black", size = 1),
-    panel.grid.major.x = element_blank(),
-    panel.grid.major.y = element_blank()
+    panel.grid = element_blank()
   ) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "red", size=5) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "black", size=5, shape=21) +
