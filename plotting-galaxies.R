@@ -188,11 +188,13 @@ field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E <- sqrt((1.3*field.sample.one.LOR
 field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E <- sqrt((1.3*field.sample.two.HIRDSHFT.data$E_LSIGMA)^2 + (0.82*field.sample.two.HIRDSHFT.data$e_lIeJB_DEV)^2)
 field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E <- sqrt((1.3*field.sample.two.LORDSHFT.data$E_LSIGMA)^2 + (0.82*field.sample.two.LORDSHFT.data$e_lIeJB_DEV)^2)
 
+coma.data$lSIGMA_lLG_IE_E_154 <- sqrt(((1.3/1.54)^2)*(coma.data$e_lsigma)^2)
 field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E_154 <- sqrt(((1.3/1.54)^2)*(field.sample.one.HIRDSHFT.data$E_LSIGMA)^2 + ((0.82/1.54)^2)*(field.sample.one.HIRDSHFT.data$e_lIeJB_DEV)^2)
 field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E_154 <- sqrt(((1.3/1.54)^2)*(field.sample.one.LORDSHFT.data$E_LSIGMA)^2 + ((0.82/1.54)^2)*(field.sample.one.LORDSHFT.data$e_lIeJB_DEV)^2)
 field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E_154 <- sqrt(((1.3/1.54)^2)*(field.sample.two.HIRDSHFT.data$E_LSIGMA)^2 + ((0.82/1.54)^2)*(field.sample.two.HIRDSHFT.data$e_lIeJB_DEV)^2)
 field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E_154 <- sqrt(((1.3/1.54)^2)*(field.sample.two.LORDSHFT.data$E_LSIGMA)^2 + ((0.82/1.54)^2)*(field.sample.two.LORDSHFT.data$e_lIeJB_DEV)^2)
 
+coma.data$lREJB_lIE_lSIGMA_270 <- sqrt(((1.3/2.7)^2)*(coma.data$e_lsigma)^2)
 field.sample.one.HIRDSHFT.data$lREJB_lIE_lSIGMA_270 <- sqrt(((2.22/2.7)^2)*(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W)^2 + ((0.82/2.7)^2)*(field.sample.one.HIRDSHFT.data$e_lIeJB_DEV)^2+2*(2.22/2.7)*(0.82/2.7)*(-0.97)*(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W)*(field.sample.one.HIRDSHFT.data$e_lIeJB_DEV) + ((1.3/2.7)^2)*(field.sample.one.HIRDSHFT.data$E_LSIGMA)^2)
 field.sample.one.LORDSHFT.data$lREJB_lIE_lSIGMA_270 <- sqrt(((2.22/2.7)^2)*(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W)^2 + ((0.82/2.7)^2)*(field.sample.one.LORDSHFT.data$e_lIeJB_DEV)^2+2*(2.22/2.7)*(0.82/2.7)*(-0.97)*(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W)*(field.sample.one.LORDSHFT.data$e_lIeJB_DEV) + ((1.3/2.7)^2)*(field.sample.one.LORDSHFT.data$E_LSIGMA)^2)
 field.sample.two.HIRDSHFT.data$lREJB_lIE_lSIGMA_270 <- sqrt(((2.22/2.7)^2)*(field.sample.two.HIRDSHFT.data$E_LRE_DEVAF814W)^2 + ((0.82/2.7)^2)*(field.sample.two.HIRDSHFT.data$e_lIeJB_DEV)^2+2*(2.22/2.7)*(0.82/2.7)*(-0.97)*(field.sample.two.HIRDSHFT.data$E_LRE_DEVAF814W)*(field.sample.two.HIRDSHFT.data$e_lIeJB_DEV) + ((1.3/2.7)^2)*(field.sample.two.HIRDSHFT.data$E_LSIGMA)^2)
@@ -265,14 +267,31 @@ fundamental_plane_faceon <- ggplot() + theme_bw() +
   geom_point(data = field.sample.one.LORDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54), color = "black", size=2, shape=21) +
   geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54), color = "black", size=5, shape=21) +
   geom_point(data = field.sample.two.LORDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54), color = "black", size=2, shape=21) +
-  geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54), color = "yellow", size=4) +
-  geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54), color = "black", size=4, shape=21) +
+  geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54), color = "yellow", size=2) +
+  geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54), color = "black", size=2, shape=21) +
   geom_smooth(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54, method = "lm", se = FALSE)) +
   xlab('(2.22logre - 0.82log<I>e + 1.3log(σ))/2.70') +
   ylab('(1.3log<I>e + 0.82log(σ))/1.54') +
   # Change the tick marks
   scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver())
+  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+  # Coma Error Bar
+  geom_errorbarh(aes(y=2.3, x=0.0, xmin=0.0 - mean(coma.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), xmax=0.0 + mean(coma.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), width = 0.02)) +
+  geom_errorbar(aes(x=0.0, ymin=2.3 - mean(coma.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), ymax=2.3 + mean(coma.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), width = 0.02)) +
+  # Sample 1 high redshift error
+  geom_errorbar(aes(x=-0.1, ymin=2.3 - mean(field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), ymax=2.3 + mean(field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), width = 0.02)) +
+  geom_errorbarh(aes(y=2.3, x=-0.1, xmin=-0.1 - mean(field.sample.one.HIRDSHFT.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), xmax=-0.1 + mean(field.sample.one.HIRDSHFT.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), width = 0.02)) +
+  # Sample 1 low redshift error
+  geom_errorbar(aes(x=-0.2, ymin=2.3 - mean(field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), ymax=2.3 + mean(field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), width = 0.02)) +
+  geom_errorbarh(aes(y=2.3, x=-0.2, xmin=-0.2 - mean(field.sample.one.LORDSHFT.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), xmax=-0.2 + mean(field.sample.one.LORDSHFT.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), width = 0.02)) +
+  
+  # Sample 2 high redshift error
+  geom_errorbar(aes(x=-0.3, ymin=2.3 - mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), ymax=2.3 + mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), width = 0.02)) +
+  geom_errorbarh(aes(y=2.3, x=-0.3, xmin=-0.3 - mean(field.sample.two.HIRDSHFT.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), xmax=-0.3 + mean(field.sample.one.HIRDSHFT.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), width = 0.02)) +
+  # Sample 2 low redshift error
+  geom_errorbar(aes(x=-0.4, ymin=2.3 - mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), ymax=2.3 + mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E_154, na.rm = TRUE), width = 0.02)) +
+  geom_errorbarh(aes(y=2.3, x=-0.4, xmin=-0.4 - mean(field.sample.two.LORDSHFT.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), xmax=-0.4 + mean(field.sample.two.LORDSHFT.data$lREJB_lIE_lSIGMA_270, na.rm = TRUE), width = 0.02))
+
 
 add.tick.marks(fundamental_plane_faceon)
 
