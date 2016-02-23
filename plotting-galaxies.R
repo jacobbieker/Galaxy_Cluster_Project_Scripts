@@ -235,9 +235,19 @@ fundamental_plane_headon <- ggplot() + theme_bw() +
   scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
   # Coma Error Bar
   geom_errorbar(aes(x=1.4, ymin=-0.5 - mean(coma.data$e_lsigma), ymax=-0.5 + mean(coma.data$e_lsigma), width = 0.02)) +
-  # Sample 1 error
+  # Sample 1 high redshift error
   geom_errorbar(aes(x=1.2, ymin=-0.5 - mean(field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E), ymax=-0.5 + mean(field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E), width = 0.02)) +
-  geom_errorbarh(aes(y=-0.5, x=1.2, xmin=1.2 - mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W), xmax=1.2 + mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W), width = 0.02))
+  geom_errorbarh(aes(y=-0.5, x=1.2, xmin=1.2 - mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W), xmax=1.2 + mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W), width = 0.02)) +
+  # Sample 1 low redshift error
+  geom_errorbar(aes(x=1.3, ymin=-0.5 - mean(field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E), ymax=-0.5 + mean(field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E), width = 0.02)) +
+  geom_errorbarh(aes(y=-0.5, x=1.3, xmin=1.3 - mean(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W), xmax=1.3 + mean(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W), width = 0.02))
+  
+  # Sample 2 high redshift error
+  geom_errorbar(aes(x=1.1, ymin=-0.5 - mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E), ymax=-0.5 + mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E), width = 0.02)) +
+  geom_errorbarh(aes(y=-0.5, x=1.1, xmin=1.1 - mean(field.sample.two.HIRDSHFT.data$E_LRE_DEVAF814W), xmax=1.1 + mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W), width = 0.02)) +
+  # Sample 2 low redshift error
+  geom_errorbar(aes(x=1.0, ymin=-0.5 - mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E), ymax=-0.5 + mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E), width = 0.02)) +
+  geom_errorbarh(aes(y=-0.5, x=1.0, xmin=1.0 - mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W), xmax=1.0 + mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W), width = 0.02))
 
 add.tick.marks(fundamental_plane_headon)
 
