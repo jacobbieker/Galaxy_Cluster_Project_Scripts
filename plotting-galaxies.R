@@ -134,6 +134,26 @@ add.tick.marks <- function(graph_to_add_ticks_to) {
   ######################
   
 }
+
+add.mean.error.bars.all <- function(graph_to_add_error_to, coma, sample1.HI, sample1.LO, sample2.HI, sample2.LO, coma.x.error, coma.y.error, sample.x.error, sample.y.error, starting.x, starting.y, error.spacing) {
+    graph_to_add_error_to + 
+    # Coma Error Bar
+    geom_errorbar(aes(x=starting.x, ymin=starting.y - mean(coma$coma.x.error, na.rm = TRUE), ymax=starting.y + mean(coma$coma.y.error, na.rm = TRUE), width = 0.02)) +
+    # Sample 1 high redshift error
+    geom_errorbar(aes(x=starting.x - error.spacing, ymin=starting.y - mean(sample1.HI$sample.y.error, na.rm = TRUE), ymax=starting.y + mean(sample1.HI$sample.y.error, na.rm = TRUE), width = 0.02)) +
+    geom_errorbarh(aes(y=starting.y, x=starting.x - error.spacing, xmin=starting.x - error.spacing - mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=starting.x - error.spacing + mean(sample1.HI$sample.x.error, na.rm = TRUE), width = 0.02)) +
+    # Sample 1 low redshift error
+    geom_errorbar(aes(x=starting.x - error.spacing, ymin=starting.y - mean(sample1.LO$sample.y.error, na.rm = TRUE), ymax=starting.y + mean(sample1.LO$sample.y.error, na.rm = TRUE), width = 0.02)) +
+    geom_errorbarh(aes(y=starting.y, x=starting.x - error.spacing, xmin=starting.x - error.spacing - mean(sample1.LO$sample.x.error, na.rm = TRUE), xmax=starting.x - error.spacing + mean(sample1.LO$sample.x.error, na.rm = TRUE), width = 0.02)) +
+    
+    # Sample 2 high redshift error
+    geom_errorbar(aes(x=1.1, ymin=-0.5 - mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
+    geom_errorbarh(aes(y=-0.5, x=1.1, xmin=1.1 - mean(field.sample.two.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.1 + mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02)) +
+    # Sample 2 low redshift error
+    geom_errorbar(aes(x=1.0, ymin=-0.5 - mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
+    geom_errorbarh(aes(y=-0.5, x=1.0, xmin=1.0 - mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.0 + mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02))
+  
+}
 #########################################################
 #
 #   Go through whichever sheets are needed and graph
@@ -233,22 +253,7 @@ fundamental_plane_headon <- ggplot() + theme_bw() +
   # Change the tick marks
   scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
   scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-  # Coma Error Bar
-  geom_errorbar(aes(x=1.4, ymin=-0.5 - mean(coma.data$e_lsigma, na.rm = TRUE), ymax=-0.5 + mean(coma.data$e_lsigma, na.rm = TRUE), width = 0.02)) +
-  # Sample 1 high redshift error
-  geom_errorbar(aes(x=1.2, ymin=-0.5 - mean(field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
-  geom_errorbarh(aes(y=-0.5, x=1.2, xmin=1.2 - mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.2 + mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02)) +
-  # Sample 1 low redshift error
-  geom_errorbar(aes(x=1.3, ymin=-0.5 - mean(field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
-  geom_errorbarh(aes(y=-0.5, x=1.3, xmin=1.3 - mean(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.3 + mean(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02)) +
   
-  # Sample 2 high redshift error
-  geom_errorbar(aes(x=1.1, ymin=-0.5 - mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
-  geom_errorbarh(aes(y=-0.5, x=1.1, xmin=1.1 - mean(field.sample.two.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.1 + mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02)) +
-  # Sample 2 low redshift error
-  geom_errorbar(aes(x=1.0, ymin=-0.5 - mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
-  geom_errorbarh(aes(y=-0.5, x=1.0, xmin=1.0 - mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.0 + mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02))
-
 add.tick.marks(fundamental_plane_headon)
 
 # Face On Graph
@@ -265,14 +270,29 @@ fundamental_plane_faceon <- ggplot() + theme_bw() +
   geom_point(data = field.sample.one.LORDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54), color = "black", size=2, shape=21) +
   geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54), color = "black", size=5, shape=21) +
   geom_point(data = field.sample.two.LORDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54), color = "black", size=2, shape=21) +
-  geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54), color = "yellow", size=4) +
-  geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54), color = "black", size=4, shape=21) +
+  geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54), color = "yellow", size=2) +
+  geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54), color = "black", size=2, shape=21) +
   geom_smooth(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54, method = "lm", se = FALSE)) +
   xlab('(2.22logre - 0.82log<I>e + 1.3log(σ))/2.70') +
   ylab('(1.3log<I>e + 0.82log(σ))/1.54') +
   # Change the tick marks
   scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver())
+  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+  # Coma Error Bar
+  geom_errorbar(aes(x=0.0, ymin=2.3 - mean(coma.data$e_lsigma, na.rm = TRUE), ymax=2.3 + mean(coma.data$e_lsigma, na.rm = TRUE), width = 0.02)) +
+  # Sample 1 high redshift error
+  geom_errorbar(aes(x=-0.1, ymin=2.3 - mean(field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=2.3 + mean(field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
+  geom_errorbarh(aes(y=-0.5, x=1.2, xmin=0.1 - mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=0.1 + mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02)) +
+  # Sample 1 low redshift error
+  geom_errorbar(aes(x=-0.2, ymin=2.3 - mean(field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=2.3 + mean(field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
+  geom_errorbarh(aes(y=-0.5, x=1.3, xmin=1.3 - mean(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.3 + mean(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02)) +
+  
+  # Sample 2 high redshift error
+  geom_errorbar(aes(x=-0.3, ymin=2.3 - mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
+  geom_errorbarh(aes(y=-0.5, x=1.1, xmin=1.1 - mean(field.sample.two.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.1 + mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02)) +
+  # Sample 2 low redshift error
+  geom_errorbar(aes(x=-0.4, ymin=2.3 - mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = 0.02)) +
+  geom_errorbarh(aes(y=-0.5, x=1.0, xmin=1.0 - mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.0 + mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = 0.02))
 
 add.tick.marks(fundamental_plane_faceon)
 
