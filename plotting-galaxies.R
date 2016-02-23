@@ -175,6 +175,30 @@ coma.re <- coma.data$lreJB_kpc_DEV
 coma.ie <- coma.data$lIeJB_cor
 coma.sigma <- coma.data$lsigma_cor
 
+##########################################################################################
+#
+#
+#  Calculate the errors not given in the data sheet and add to the data.frame
+#
+#
+###########################################################################################
+
+field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E <- sqrt((1.3*field.sample.one.HIRDSHFT.data$E_LSIGMA)^2 + (0.82*field.sample.one.HIRDSHFT.data$e_lIeJB_DEV)^2)
+field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E <- sqrt((1.3*field.sample.one.LORDSHFT.data$E_LSIGMA)^2 + (0.82*field.sample.one.LORDSHFT.data$e_lIeJB_DEV)^2)
+field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E <- sqrt((1.3*field.sample.two.HIRDSHFT.data$E_LSIGMA)^2 + (0.82*field.sample.two.HIRDSHFT.data$e_lIeJB_DEV)^2)
+field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E <- sqrt((1.3*field.sample.two.LORDSHFT.data$E_LSIGMA)^2 + (0.82*field.sample.two.LORDSHFT.data$e_lIeJB_DEV)^2)
+
+field.sample.one.HIRDSHFT.data$lSIGMA_lLG_IE_E_154 <- sqrt(((1.3/1.54)^2)*(field.sample.one.HIRDSHFT.data$E_LSIGMA)^2 + ((0.82/1.54)^2)*(field.sample.one.HIRDSHFT.data$e_lIeJB_DEV)^2)
+field.sample.one.LORDSHFT.data$lSIGMA_lLG_IE_E_154 <- sqrt(((1.3/1.54)^2)*(field.sample.one.LORDSHFT.data$E_LSIGMA)^2 + ((0.82/1.54)^2)*(field.sample.one.LORDSHFT.data$e_lIeJB_DEV)^2)
+field.sample.two.HIRDSHFT.data$lSIGMA_lLG_IE_E_154 <- sqrt(((1.3/1.54)^2)*(field.sample.two.HIRDSHFT.data$E_LSIGMA)^2 + ((0.82/1.54)^2)*(field.sample.two.HIRDSHFT.data$e_lIeJB_DEV)^2)
+field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E_154 <- sqrt(((1.3/1.54)^2)*(field.sample.two.LORDSHFT.data$E_LSIGMA)^2 + ((0.82/1.54)^2)*(field.sample.two.LORDSHFT.data$e_lIeJB_DEV)^2)
+
+field.sample.one.HIRDSHFT.data$lREJB_lIE_lSIGMA_270 <- sqrt(((2.22/2.7)^2)*(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W)^2 + ((0.82/2.7)^2)*(field.sample.one.HIRDSHFT.data$e_lIeJB_DEV)^2+2*(2.22/2.7)*(0.82/2.7)*(-0.97)*(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W)*(field.sample.one.HIRDSHFT.data$e_lIeJB_DEV) + ((1.3/2.7)^2)*(field.sample.one.HIRDSHFT.data$E_LSIGMA)^2)
+field.sample.one.LORDSHFT.data$lREJB_lIE_lSIGMA_270 <- sqrt(((2.22/2.7)^2)*(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W)^2 + ((0.82/2.7)^2)*(field.sample.one.LORDSHFT.data$e_lIeJB_DEV)^2+2*(2.22/2.7)*(0.82/2.7)*(-0.97)*(field.sample.one.LORDSHFT.data$E_LRE_DEVAF814W)*(field.sample.one.LORDSHFT.data$e_lIeJB_DEV) + ((1.3/2.7)^2)*(field.sample.one.LORDSHFT.data$E_LSIGMA)^2)
+field.sample.two.HIRDSHFT.data$lREJB_lIE_lSIGMA_270 <- sqrt(((2.22/2.7)^2)*(field.sample.two.HIRDSHFT.data$E_LRE_DEVAF814W)^2 + ((0.82/2.7)^2)*(field.sample.two.HIRDSHFT.data$e_lIeJB_DEV)^2+2*(2.22/2.7)*(0.82/2.7)*(-0.97)*(field.sample.two.HIRDSHFT.data$E_LRE_DEVAF814W)*(field.sample.two.HIRDSHFT.data$e_lIeJB_DEV) + ((1.3/2.7)^2)*(field.sample.two.HIRDSHFT.data$E_LSIGMA)^2)
+field.sample.two.LORDSHFT.data$lREJB_lIE_lSIGMA_270 <- sqrt(((2.22/2.7)^2)*(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W)^2 + ((0.82/2.7)^2)*(field.sample.two.LORDSHFT.data$e_lIeJB_DEV)^2+2*(2.22/2.7)*(0.82/2.7)*(-0.97)*(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W)*(field.sample.two.LORDSHFT.data$e_lIeJB_DEV) + ((1.3/2.7)^2)*(field.sample.two.LORDSHFT.data$E_LSIGMA)^2)
+
+
 ###########################################################################################
 #
 #
