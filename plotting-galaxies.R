@@ -3,7 +3,7 @@
 #         Install the needed dependancies
 #
 #########################################################
-if(require("XLConnect") && require("ggplot2") && require(gtable) && require("scatterplot3d")){
+if(require("XLConnect") && require("ggplot2") && require(gtable) && require("scatterplot3d") && require("scales")){
   print("XLConnect and ggplot2 are loaded correctly")
 } else {
   print("Trying to install XLConnect")
@@ -12,6 +12,10 @@ if(require("XLConnect") && require("ggplot2") && require(gtable) && require("sca
   install.packages("ggplot2", dependencies = TRUE)
   print("Trying to install scatterplot3d")
   install.packages("scatterplot3d", dependencies = TRUE)
+  print("installing gtable")
+  install.packages("gtable", dependencies = TRUE)
+  print("installing scales")
+  install.packages("scales", dependencies = TRUE)
   if(require("XLConnect") && require("ggplot2") && require("scatterplot3d")){
     print("XLConnect, ggplot2, and scatterplot3d are installed and loaded")
   } else {
@@ -73,6 +77,63 @@ graph.sigmaI.re <- function(sheet, res, colorcode, shapecode) {
   sigma.data <- sheet$LSIGMA_COR # log10(sigma) in km/s
   sigma.error <- sheet$E_LSIGMA # Error in Sigma
 }
+
+add.tick.marks <- function(graph_to_add_ticks_to) {
+  ################################
+  # Adding tick marks on all sides
+  ################################
+  # Convert the plot to a grob
+  gt <- ggplotGrob(graph_to_add_ticks_to)
+  
+  # Get the position of the panel in the layout
+  panel <-c(subset(gt$layout, name=="panel", se=t:r))
+  
+  ## For the bottom axis
+  # Get the row number of the bottom axis in the layout
+  rn <- which(gt$layout$name == "axis-b")
+  
+  # Extract the axis (tick marks only)
+  axis.grob <- gt$grobs[[rn]]
+  axisb <- axis.grob$children[[2]]  # Two children - get the second
+  axisb  # Note: two grobs - tick marks and text
+  
+  # Get the tick marks
+  xaxis = axisb$grobs[[1]]  # NOTE: tick marks first
+  xaxis$y = xaxis$y - unit(0, "cm")  # Position them inside the panel
+  
+  # Add a new row to gt, and insert the revised xaxis grob into the new row.
+  gt <- gtable_add_rows(gt, unit(0, "lines"), panel$t-1)
+  gt <- gtable_add_grob(gt, xaxis, l = panel$l, t = panel$t, r = panel$r, name = "ticks")
+  
+  ## Repeat for the left axis
+  # Get the row number of the left axis in the layout
+  panel <-c(subset(gt$layout, name=="panel", se=t:r))
+  rn <- which(gt$layout$name == "axis-l")
+  
+  # Extract the axis (tick marks and axis text)
+  axis.grob <- gt$grobs[[rn]]
+  axisl <- axis.grob$children[[2]]  # Two children - get the second
+  axisl  # Note: two grobs -  text and tick marks
+  
+  # Get the tick marks
+  yaxis = axisl$grobs[[2]] # NOTE: tick marks second
+  yaxis$x = yaxis$x - unit(0, "cm") # Position them inside the panel
+  
+  # Add a new column to gt, and insert the revised yaxis grob into the new column.
+  gt <- gtable_add_cols(gt, unit(0, "lines"), panel$r)
+  gt <- gtable_add_grob(gt, yaxis, t = panel$t, l = panel$r+1, name = "ticks")
+  
+  # Turn clipping off
+  gt$layout[gt$layout$name == "ticks", ]$clip = "off"
+  
+  # Draw it
+  grid.draw(gt)
+  
+  #######################
+  # End adding tick marks
+  ######################
+  
+}
 #########################################################
 #
 #   Go through whichever sheets are needed and graph
@@ -127,7 +188,11 @@ coma.sigma <- coma.data$lsigma_cor
 ##########################
 
 # Side On Graph
-fundamental_plane_headon <- ggplot() +
+fundamental_plane_headon <- ggplot() + theme_bw() +
+  theme(
+    panel.border = element_rect(fill = NA, colour = "black", size = 1),
+    panel.grid = element_blank()
+  ) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "red", size=5) +
   geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "red", size=2) +
   geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "blue", size=5) +
@@ -140,12 +205,19 @@ fundamental_plane_headon <- ggplot() +
   geom_point(data = coma.data, aes(x = lreJB_kpc_DEV, y = (1.3*lsigma_cor)-(0.82*lIeJB_cor)), color = "black", size=4, shape=21) +
   geom_smooth(data = coma.data, aes(x = lreJB_kpc_DEV, y = (1.3*lsigma_cor)-(0.82*lIeJB_cor)), method = "lm", se = FALSE) +
   xlab('logre [kpc]') +
-  ylab('1.3log(σ) - 0.82log<I>')
+  ylab('1.3log(σ) - 0.82log<I>') + 
+  # Change the tick marks
+  scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver())
 
-fundamental_plane_headon
+add.tick.marks(fundamental_plane_headon)
 
 # Face On Graph
-fundamental_plane_faceon <- ggplot() +
+fundamental_plane_faceon <- ggplot() + theme_bw() +
+  theme(
+    panel.border = element_rect(fill = NA, colour = "black", size = 1),
+    panel.grid = element_blank()
+  ) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54), color = "red", size=5) +
   geom_point(data = field.sample.one.LORDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54), color = "red", size=2) +
   geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = ((2.22*LREJB_KPC_DEV)-(0.82*LIEJB_DEV) + (1.3*LSIGMA_COR))/2.70, y = ((1.3*LIEJB_DEV)+(0.82*LSIGMA_COR))/1.54), color = "blue", size=5) +
@@ -158,9 +230,12 @@ fundamental_plane_faceon <- ggplot() +
   geom_point(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54), color = "black", size=4, shape=21) +
   geom_smooth(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54, method = "lm", se = FALSE)) +
   xlab('(2.22logre - 0.82log<I>e + 1.3log(σ))/2.70') +
-  ylab('(1.3log<I>e + 0.82log(σ))/1.54')
+  ylab('(1.3log<I>e + 0.82log(σ))/1.54') +
+  # Change the tick marks
+  scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver())
 
-fundamental_plane_faceon
+add.tick.marks(fundamental_plane_faceon)
 
 ##################
 # Velocity Dispersion vs log M/L
@@ -179,67 +254,14 @@ lsigma.vs.logml <- ggplot() + theme_bw() +
   geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "black", size=5, shape=21) +
   geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "blue", size=2) +
   geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "black", size=2, shape=21) +
-  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "yellow", size=4) +
-  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "black", size=4, shape=21) +
+  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "yellow", size=2) +
+  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "black", size=2, shape=21) +
   xlab('log(σ)') +
   ylab('log(M/Lb) [M/L]') +
-  # Currently calculated by coef(lm(data=coma.data, lML_JB_DEV ~ lsigma_cor))
-  geom_abline(intercept = -0.8569, slope=0.7535)
-  
-################################
-# Adding tick marks on all sides
-################################
-# Convert the plot to a grob
-gt <- ggplotGrob(lsigma.vs.logml)
+  # Currently calculated by coef(lm(data=coma.data, lML_JB_DEV ~ lsigma_cor)) slope: 1.07*log(sigma), -1.560
+  geom_abline(intercept = -0.8569, slope=0.7535) +
+  # Change the tick marks
+  scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver())
 
-# Get the position of the panel in the layout
-panel <-c(subset(gt$layout, name=="panel", se=t:r))
-
-## For the bottom axis
-# Get the row number of the bottom axis in the layout
-rn <- which(gt$layout$name == "axis-b")
-
-# Extract the axis (tick marks only)
-axis.grob <- gt$grobs[[rn]]
-axisb <- axis.grob$children[[2]]  # Two children - get the second
-axisb  # Note: two grobs - tick marks and text
-
-# Get the tick marks
-xaxis = axisb$grobs[[1]]  # NOTE: tick marks first
-xaxis$y = xaxis$y - unit(0.25, "cm")  # Position them inside the panel
-
-# Add a new row to gt, and insert the revised xaxis grob into the new row.
-gt <- gtable_add_rows(gt, unit(0, "lines"), panel$t-1)
-gt <- gtable_add_grob(gt, xaxis, l = panel$l, t = panel$t, r = panel$r, name = "ticks")
-
-## Repeat for the left axis
-# Get the row number of the left axis in the layout
-panel <-c(subset(gt$layout, name=="panel", se=t:r))
-rn <- which(gt$layout$name == "axis-l")
-
-# Extract the axis (tick marks and axis text)
-axis.grob <- gt$grobs[[rn]]
-axisl <- axis.grob$children[[2]]  # Two children - get the second
-axisl  # Note: two grobs -  text and tick marks
-
-# Get the tick marks
-yaxis = axisl$grobs[[2]] # NOTE: tick marks second
-yaxis$x = yaxis$x - unit(0.25, "cm") # Position them inside the panel
-
-# Add a new column to gt, and insert the revised yaxis grob into the new column.
-gt <- gtable_add_cols(gt, unit(0, "lines"), panel$r)
-gt <- gtable_add_grob(gt, yaxis, t = panel$t, l = panel$r+1, name = "ticks")
-
-# Turn clipping off
-gt$layout[gt$layout$name == "ticks", ]$clip = "off"
-
-# Draw it
-grid.draw(gt)
-
-#######################
-# End adding tick marks
-######################
-
-lsigma.vs.logml
-
-library(reshape2)
+add.tick.marks(lsigma.vs.logml)
