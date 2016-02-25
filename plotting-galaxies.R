@@ -238,7 +238,7 @@ fundamental_plane_headon <- ggplot() + theme_bw() +
   geom_point(data = coma.data, aes(x = lreJB_kpc_DEV, y = (1.3*lsigma_cor)-(0.82*lIeJB_cor)), color = "black", size=2, shape=21) +
   xlab('logre [kpc]') +
   ylab('1.3log(σ) - 0.82log<I>') + 
-  # Currently calculated by coef(lm(data=coma.data, lML_JB_DEV ~ lsigma_cor)) slope: 1.07*log(sigma), -1.560
+  # Currently calculated by coef(lm(data=coma.data, lSIGMA_lIE ~ lreJB_kpc_DEV))
   geom_abline(intercept = 0.4259036, slope=1.0079013) +
   # Change the tick marks
   scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
@@ -262,6 +262,11 @@ fundamental_plane_headon <- ggplot() + theme_bw() +
 add.tick.marks(fundamental_plane_headon)
 
 # Face On Graph
+
+# Getting the Coma Cluster line of best fit
+coma.data$lREJB_lIEJB_lSIGMA <- ((2.22*coma.data$lreJB_kpc_DEV)-(0.82*coma.data$lIeJB_cor)+(1.3*coma.data$lsigma_cor))/2.70
+coma.data$lIEJB_lSIGMA <- ((1.3*coma.data$lIeJB_cor)+(0.82*coma.data$lsigma_cor))/1.54
+
 fundamental_plane_faceon <- ggplot() + theme_bw() +
   theme(
     panel.border = element_rect(fill = NA, colour = "black", size = 1),
@@ -280,6 +285,8 @@ fundamental_plane_faceon <- ggplot() + theme_bw() +
   geom_smooth(data = coma.data, aes(x = ((2.22*lreJB_kpc_DEV)-(0.82*lIeJB_cor)+(1.3*lsigma_cor))/2.70, y = ((1.3*lIeJB_cor)+(0.82*lsigma_cor))/1.54, method = "lm", se = FALSE)) +
   xlab('(2.22logre - 0.82log<I>e + 1.3log(σ))/2.70') +
   ylab('(1.3log<I>e + 0.82log(σ))/1.54') +
+  # Currently calculated by coef(lm(data=coma.data, lSIGMA_lIE ~ lreJB_kpc_DEV))
+  geom_abline(intercept = 3.6978053, slope=-0.6993457) +
   # Change the tick marks
   scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
   scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
