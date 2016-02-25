@@ -217,6 +217,10 @@ error.bar.end.length = 0.02
 ##########################
 
 # Side On Graph
+
+# Get the coef for the line of best fit for Coma
+coma.data$lSIGMA_lIE <- (1.3*coma.data$lsigma_cor)-(0.82*coma.data$lIeJB_cor)
+
 fundamental_plane_headon <- ggplot() + theme_bw() +
   theme(
     panel.border = element_rect(fill = NA, colour = "black", size = 1),
@@ -232,9 +236,10 @@ fundamental_plane_headon <- ggplot() + theme_bw() +
   geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "black", size=5, shape=21) +
   geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "black", size=2, shape=21) +
   geom_point(data = coma.data, aes(x = lreJB_kpc_DEV, y = (1.3*lsigma_cor)-(0.82*lIeJB_cor)), color = "black", size=2, shape=21) +
-  geom_smooth(data = coma.data, aes(x = lreJB_kpc_DEV, y = (1.3*lsigma_cor)-(0.82*lIeJB_cor)), method = "lm", se = FALSE) +
   xlab('logre [kpc]') +
   ylab('1.3log(σ) - 0.82log<I>') + 
+  # Currently calculated by coef(lm(data=coma.data, lML_JB_DEV ~ lsigma_cor)) slope: 1.07*log(sigma), -1.560
+  geom_abline(intercept = 0.4259036, slope=1.0079013) +
   # Change the tick marks
   scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
   scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
