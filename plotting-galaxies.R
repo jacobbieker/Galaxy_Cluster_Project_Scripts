@@ -362,6 +362,8 @@ add.tick.marks(lsigma.vs.logml)
 # log Mass vs log(Mass/L)
 ###############################
 
+# Getting the weights for the rq value
+coma.data$lm_vs_lml_weights <- (abs(0.24*coma.data$lMass_DEV + coma.data$lML_JB_DEV + 1.754))/(sqrt(0.24^2+1))
 # Starting values for plot
 starting.x <- 12
 
@@ -382,8 +384,6 @@ lm.vs.logml <- ggplot() + theme_bw() +
   geom_point(data = coma.data, aes(x = lMass_DEV, y = lML_JB_DEV), color = "black", size=2, shape=21) +
   xlab('log(Mass)') +
   ylab('log(M/Lb) [M/L]') +
-  # Currently calculated by coef(lm(data=coma.data, lML_JB_DEV ~ lsigma_cor)) slope: 1.07*log(sigma), -1.560
-  geom_abline(intercept = -2.0585225, slope=0.262075) +
   # Calcuated by quantreg's rq(coma.data$lML_JB_DEV ~ coma.data$lMass_DEV)
   geom_abline(intercept = -1.6587, slope = 0.2262) +
   # Change the tick marks
@@ -405,12 +405,3 @@ lm.vs.logml <- ggplot() + theme_bw() +
 
 
 add.tick.marks(lm.vs.logml)
-
-
-### Nelder Mead Alg
-
-coma.relation <- function(coma.gamma, log.m) {
-  (0.24)*log.m + gamma
-}
-
-optim(fn=coma.relation, coma.data$lMass_DEV, method="Nelder-Mead")
