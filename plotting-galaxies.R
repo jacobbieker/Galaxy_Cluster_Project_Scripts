@@ -3,7 +3,7 @@
 #         Install the needed dependancies
 #
 #########################################################
-if(require("XLConnect") && require("ggplot2") && require(gtable) && require("scatterplot3d") && require("scales")){
+if(require("XLConnect") && require("ggplot2") && require(gtable) && require("quantreg") && require("scatterplot3d") && require("scales")){
   print("XLConnect and ggplot2 are loaded correctly")
 } else {
   print("Trying to install XLConnect")
@@ -16,6 +16,8 @@ if(require("XLConnect") && require("ggplot2") && require(gtable) && require("sca
   install.packages("gtable", dependencies = TRUE)
   print("installing scales")
   install.packages("scales", dependencies = TRUE)
+  print("Installing quantreg")
+  install.packages("quantreg", dependencies = TRUE)
   if(require("XLConnect") && require("ggplot2") && require("scatterplot3d")){
     print("XLConnect, ggplot2, and scatterplot3d are installed and loaded")
   } else {
@@ -356,3 +358,59 @@ lsigma.vs.logml <- ggplot() + theme_bw() +
 
 add.tick.marks(lsigma.vs.logml)
 
+###############################
+# log Mass vs log(Mass/L)
+###############################
+
+# Starting values for plot
+starting.x <- 12
+
+lm.vs.logml <- ggplot() + theme_bw() +
+  theme(
+    panel.border = element_rect(fill = NA, colour = "black", size = 1),
+    panel.grid = element_blank()
+  ) +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "red", size=5) +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=5, shape=21) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "red", size=2) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=2, shape=21) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "blue", size=5) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=5, shape=21) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "blue", size=2) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=2, shape=21) +
+  geom_point(data = coma.data, aes(x = lMass_DEV, y = lML_JB_DEV), color = "yellow", size=2) +
+  geom_point(data = coma.data, aes(x = lMass_DEV, y = lML_JB_DEV), color = "black", size=2, shape=21) +
+  xlab('log(Mass)') +
+  ylab('log(M/Lb) [M/L]') +
+  # Currently calculated by coef(lm(data=coma.data, lML_JB_DEV ~ lsigma_cor)) slope: 1.07*log(sigma), -1.560
+  geom_abline(intercept = -2.0585225, slope=0.262075) +
+  # Calcuated by quantreg's rq(coma.data$lML_JB_DEV ~ coma.data$lMass_DEV)
+  geom_abline(intercept = -1.6587, slope = 0.2262) +
+  # Change the tick marks
+  scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+  # Sample 1 high redshift error
+  geom_errorbar(aes(x=starting.x - 0.05, ymin=-0.4 - mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=-0.4 + mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+  geom_errorbarh(aes(y=-0.4, x=starting.x-0.05, xmin=starting.x-0.05 - mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.05 + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+  # Sample 1 low redshift error0
+  geom_errorbar(aes(x=starting.x - 0.1, ymin=-0.3 - mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+  geom_errorbarh(aes(y=-0.3, x=starting.x - 0.1, xmin=starting.x-0.1 - mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x - 0.1 + mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
+  
+  # Sample 2 high redshift error
+  geom_errorbar(aes(x=starting.x - 0.15, ymin=0.0 - mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+  geom_errorbarh(aes(y=0.0, x=starting.x-0.15, xmin=starting.x-0.15 - mean(field.sample.two.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.15 + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+  # Sample 2 low redshift error
+  geom_errorbar(aes(x=starting.x-0.2, ymin=0.3 - mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.3 + mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+  geom_errorbarh(aes(y=0.3, x=starting.x-0.2, xmin=starting.x-0.2 - mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.2 + mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black")
+
+
+add.tick.marks(lm.vs.logml)
+
+
+### Nelder Mead Alg
+
+coma.relation <- function(coma.gamma, log.m) {
+  (0.24)*log.m + gamma
+}
+
+optim(fn=coma.relation, coma.data$lMass_DEV, method="Nelder-Mead")
