@@ -365,7 +365,7 @@ add.tick.marks(lsigma.vs.logml)
 # Getting the weights for the rq value
 coma.data$lm_vs_lml_weights <- (abs(0.24*coma.data$lMass_DEV + coma.data$lML_JB_DEV + 1.754))/(sqrt(0.24^2+1))
 # Starting values for plot
-starting.x <- 12
+starting.x <- 12.3
 
 lm.vs.logml <- ggplot() + theme_bw() +
   theme(
@@ -390,18 +390,18 @@ lm.vs.logml <- ggplot() + theme_bw() +
   scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
   scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
   # Sample 1 high redshift error
-  geom_errorbar(aes(x=starting.x - 0.05, ymin=-0.4 - mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=-0.4 + mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  geom_errorbarh(aes(y=-0.4, x=starting.x-0.05, xmin=starting.x-0.05 - mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.05 + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+  geom_errorbar(aes(x=starting.x, ymin=-0.3 - mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=-0.3 + mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+  geom_errorbarh(aes(y=-0.3, x=starting.x, xmin=starting.x - mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
   # Sample 1 low redshift error0
-  geom_errorbar(aes(x=starting.x - 0.1, ymin=-0.3 - mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  geom_errorbarh(aes(y=-0.3, x=starting.x - 0.1, xmin=starting.x-0.1 - mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x - 0.1 + mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
+  geom_errorbar(aes(x=starting.x - 0.3, ymin=-0.3 - mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=-0.3 + mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+  geom_errorbarh(aes(y=-0.3, x=starting.x - 0.3, xmin=starting.x-0.3 - mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x - 0.3 + mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
   
   # Sample 2 high redshift error
-  geom_errorbar(aes(x=starting.x - 0.15, ymin=0.0 - mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=0.0, x=starting.x-0.15, xmin=starting.x-0.15 - mean(field.sample.two.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.15 + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+  geom_errorbar(aes(x=starting.x, ymin=0.0 - mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+  geom_errorbarh(aes(y=0.0, x=starting.x, xmin=starting.x - mean(field.sample.two.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
   # Sample 2 low redshift error
-  geom_errorbar(aes(x=starting.x-0.2, ymin=0.3 - mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.3 + mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=0.3, x=starting.x-0.2, xmin=starting.x-0.2 - mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.2 + mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black")
+  geom_errorbar(aes(x=starting.x-0.3, ymin=0.0 - mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+  geom_errorbarh(aes(y=0.0, x=starting.x-0.3, xmin=starting.x-0.3 - mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.3 + mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black")
 
 
 add.tick.marks(lm.vs.logml)
