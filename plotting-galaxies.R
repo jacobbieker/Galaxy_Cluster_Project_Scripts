@@ -446,9 +446,58 @@ add.tick.marks(lsigma.vs.redshift)
 # log(sigma) vs log(Fe4383)
 #############
 
+lsigma.vs.lfe4383 <- ggplot() + theme_bw() +
+  theme(
+    panel.border = element_rect(fill = NA, colour = "black", size = 1),
+    panel.grid = element_blank()
+  ) +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LFE4383_COR), color = "red", size=5) +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LFE4383_COR), color = "black", size=5, shape=21) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LSIGMA_COR, y = LFE4383_COR), color = "red", size=2) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LSIGMA_COR, y = LFE4383_COR), color = "black", size=2, shape=21) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LFE4383_COR), color = "blue", size=5) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LFE4383_COR), color = "black", size=5, shape=21) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = LFE4383_COR), color = "blue", size=2) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = LFE4383_COR), color = "black", size=2, shape=21) +
+  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "yellow", size=2) +
+  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "black", size=2, shape=21) +
+  xlab('log(σ)') +
+  ylab('log(Fe4383)') +
+  # Calcuated by quantreg's rq(coma.data$lML_JB_DEV ~ coma.data$lMass_DEV)
+  #geom_abline(intercept = -1.6587, slope = 0.2262) +
+  # Change the tick marks
+  scale_x_continuous(breaks = pretty_breaks(n=20), minor_breaks = waiver()) +
+  scale_y_continuous(breaks = pretty_breaks(n=20), minor_breaks = waiver())
+
+add.tick.marks(lsigma.vs.lfe4383)
 #############
 # log(sigma) vs CN3883
 #############
+
+lsigma.vs.cn3883 <- ggplot() + theme_bw() +
+  theme(
+    panel.border = element_rect(fill = NA, colour = "black", size = 1),
+    panel.grid = element_blank()
+  ) +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = CN3883_COR), color = "red", size=5) +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = CN3883_COR), color = "black", size=5, shape=21) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LSIGMA_COR, y = CN3883_COR), color = "red", size=2) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LSIGMA_COR, y = CN3883_COR), color = "black", size=2, shape=21) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LSIGMA_COR, y = CN3883_COR), color = "blue", size=5) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LSIGMA_COR, y = CN3883_COR), color = "black", size=5, shape=21) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = CN3883_COR), color = "blue", size=2) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = CN3883_COR), color = "black", size=2, shape=21) +
+  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "yellow", size=2) +
+  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "black", size=2, shape=21) +
+  xlab('log(σ)') +
+  ylab('CN3883') +
+  # Calcuated by quantreg's rq(coma.data$lML_JB_DEV ~ coma.data$lMass_DEV)
+  #geom_abline(intercept = -1.6587, slope = 0.2262) +
+  # Change the tick marks
+  scale_x_continuous(breaks = pretty_breaks(n=20), minor_breaks = waiver()) +
+  scale_y_continuous(breaks = pretty_breaks(n=20), minor_breaks = waiver())
+ 
+add.tick.marks(lsigma.vs.cn3883)
 
 #############
 # log(sigma) vs H(delta) + H(Gamma)
