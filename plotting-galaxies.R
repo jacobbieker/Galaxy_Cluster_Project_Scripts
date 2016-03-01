@@ -405,3 +405,35 @@ lm.vs.logml <- ggplot() + theme_bw() +
 
 
 add.tick.marks(lm.vs.logml)
+
+##########################################
+#
+# Spectrometry data Graphs
+#
+##########################################
+
+#############
+# Log(sigma) vs redshift
+#############
+
+lsigma.vs.redshift
+
+#############
+# log(sigma) vs log(C4668)
+############
+
+#############
+# log(sigma) vs log(Fe4383)
+#############
+
+#############
+# log(sigma) vs CN3883
+#############
+
+#############
+# log(sigma) vs H(delta) + H(Gamma)
+#############
+
+#############
+# log(sigma) vs log(H(zeta))
+#############
