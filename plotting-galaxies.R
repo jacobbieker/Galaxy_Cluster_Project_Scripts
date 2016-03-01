@@ -416,7 +416,27 @@ add.tick.marks(lm.vs.logml)
 # Log(sigma) vs redshift
 #############
 
-lsigma.vs.redshift
+lsigma.vs.redshift <- ggplot() + theme_bw() +
+  theme(
+    panel.border = element_rect(fill = NA, colour = "black", size = 1),
+    panel.grid = element_blank()
+  ) +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = REDSHIFT, y = LSIGMA_COR), color = "red", size=5) +
+  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = REDSHIFT, y = LSIGMA_COR), color = "black", size=5, shape=21) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = REDSHIFT, y = LSIGMA_COR), color = "red", size=2) +
+  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = REDSHIFT, y = LSIGMA_COR), color = "black", size=2, shape=21) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = REDSHIFT, y = LSIGMA_COR), color = "blue", size=5) +
+  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = REDSHIFT, y = LSIGMA_COR), color = "black", size=5, shape=21) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = REDSHIFT, y = LSIGMA_COR), color = "blue", size=2) +
+  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = REDSHIFT, y = LSIGMA_COR), color = "black", size=2, shape=21) +
+  xlab('Redshift') +
+  ylab('log(σ)') +
+  # Change the tick marks
+  scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver())
+  
+
+add.tick.marks(lsigma.vs.redshift)
 
 #############
 # log(sigma) vs log(C4668)
