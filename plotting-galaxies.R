@@ -151,6 +151,8 @@ field.sample.one.HIRDSHFT.data <- subset(spectrophotometric_data$FieldGalaxies, 
 field.sample.two.LORDSHFT.data <- subset(spectrophotometric_data$FieldGalaxies, REDSHIFT < 0.8 & SAMPLE == 2);
 field.sample.two.HIRDSHFT.data <- subset(spectrophotometric_data$FieldGalaxies, REDSHIFT > 0.8 & SAMPLE == 2);
 
+RXJ <- subset(spectrophotometric_data$RXJ1226p9p3332member, NUMBERI == 55 | NUMBERI == 229 | NUMBERI == 293 | NUMBERI == 310 | NUMBERI == 423 | NUMBERI == 441 | NUMBERI == 462 | NUMBERI == 491 | NUMBERI == 512 | NUMBERI == 529 | NUMBERI == 534 | NUMBERI == 557 | NUMBERI == 563 | NUMBERI == 641 | NUMBERI == 650 | NUMBERI == 703 | NUMBERI == 709 | NUMBERI == 760 | NUMBERI == 801 | NUMBERI == 899 | NUMBERI == 1047 | NUMBERI == 1164 | NUMBERI == 1170 | NUMBERI == 1199 | NUMBERI == 56 | NUMBERI == 104 | NUMBERI == 648 | NUMBERI == 675);
+
 field.one.LO.sigma <- field.sample.one.LORDSHFT.data$LSIGMA_COR
 field.one.HI.sigma <- field.sample.one.HIRDSHFT.data$LSIGMA_COR
 
@@ -212,7 +214,7 @@ field.sample.two.LORDSHFT.data$lREJB_lIE_lSIGMA_270 <- sqrt(((2.22/2.7)^2)*(fiel
 ###########################################################################################
 
 # Error bar end length
-error.bar.end.length = 0.02
+error.bar.end.length = 0.00
 
 ##########################
 # Fundamental Plane graphs
