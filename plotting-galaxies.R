@@ -400,6 +400,8 @@ lm.vs.logml <- ggplot() + theme_bw() +
     panel.border = element_rect(fill = NA, colour = "black", size = 1),
     panel.grid = element_blank()
   ) +
+  geom_point(data = RXJ, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "gray", size=2) +
+  geom_point(data = RXJ, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=2, shape=21) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "red", size=5) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=5, shape=21) +
   geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "red", size=2) +
@@ -429,7 +431,11 @@ lm.vs.logml <- ggplot() + theme_bw() +
   geom_errorbarh(aes(y=0.0, x=starting.x, xmin=starting.x - mean(field.sample.two.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
   # Sample 2 low redshift error
   geom_errorbar(aes(x=starting.x-0.3, ymin=0.0 - mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=0.0, x=starting.x-0.3, xmin=starting.x-0.3 - mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.3 + mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black")
+  geom_errorbarh(aes(y=0.0, x=starting.x-0.3, xmin=starting.x-0.3 - mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.3 + mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
+
+  # RXJ error
+  geom_errorbar(aes(x=starting.x+0.2, ymin=-0.15 - mean(RXJ$E_LML_JB_DEV, na.rm = TRUE), ymax=-0.15 + mean(RXJ$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
+  geom_errorbarh(aes(y=-0.15, x=starting.x+0.2, xmin=starting.x+0.2 - mean(RXJ$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x+0.2 + mean(RXJ$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray")
 
 
 add.tick.marks(lm.vs.logml)
