@@ -238,11 +238,13 @@ fundamental_plane_headon <- ggplot() + theme_bw() +
     panel.border = element_rect(fill = NA, colour = "black", size = 1),
     panel.grid = element_blank()
   ) +
+  geom_point(data = RXJ, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "gray", size=2) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "red", size=5) +
   geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "red", size=2) +
   geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "blue", size=5) +
   geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "blue", size=2) +
   geom_point(data = coma.data, aes(x = lreJB_kpc_DEV, y = (1.3*lsigma_cor)-(0.82*lIeJB_cor)), color = "yellow", size=2) +
+  geom_point(data = RXJ, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "black", size=2, shape=21) +
   geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "black", size=5, shape=21) +
   geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "black", size=2, shape=21) +
   geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LREJB_KPC_DEV, y = (1.3*LSIGMA_COR)-(0.82*LIEJB_DEV)), color = "black", size=5, shape=21) +
@@ -269,8 +271,12 @@ fundamental_plane_headon <- ggplot() + theme_bw() +
   geom_errorbarh(aes(y=-0.5, x=1.1, xmin=1.1 - mean(field.sample.two.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.1 + mean(field.sample.one.HIRDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
   # Sample 2 low redshift error
   geom_errorbar(aes(x=1.0, ymin=-0.5 - mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(field.sample.two.LORDSHFT.data$lSIGMA_lLG_IE_E, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=-0.5, x=1.0, xmin=1.0 - mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.0 + mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black")
-
+  geom_errorbarh(aes(y=-0.5, x=1.0, xmin=1.0 - mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), xmax=1.0 + mean(field.sample.two.LORDSHFT.data$E_LRE_DEVAF814W, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
+  
+  # Sample 2 high redshift error
+  geom_errorbar(aes(x=0.9, ymin=-0.5 - mean(RXJ$lSIGMA_lLG_IE_E, na.rm = TRUE), ymax=-0.5 + mean(RXJ$lSIGMA_lLG_IE_E, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
+  geom_errorbarh(aes(y=-0.5, x=0.9, xmin=0.9 - mean(RXJ$E_LRE_DEVAF814W, na.rm = TRUE), xmax=0.9 + mean(RXJ$E_LRE_DEVAF814W, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray")
+  
 add.tick.marks(fundamental_plane_headon)
 
 # Face On Graph
