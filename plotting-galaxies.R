@@ -396,7 +396,7 @@ add.tick.marks(fundamental_plane_faceon)
 # Velocity Dispersion vs log M/L
 ##################
 
-create.graph(RXJ, field.sample.one.HIRDSHFT.data, field.sample.one.LORDSHFT.data, field.sample.two.HIRDSHFT.data, field.sample.two.LORDSHFT.data, coma.data, 'LSIGMA_COR', 'LML_JB_DEV', 'lsigma_cor', 'lML_JB_DEV', 'E_LSIGMA', 'E_LML_JB_DEV', 'e_lsigma', 'e_lMgb', 2.7, 0.0, -0.10, -0.15, 'log(σ)', 'log(M/Lb) [M/L]')
+#create.graph(RXJ, field.sample.one.HIRDSHFT.data, field.sample.one.LORDSHFT.data, field.sample.two.HIRDSHFT.data, field.sample.two.LORDSHFT.data, coma.data, 'LSIGMA_COR', 'LML_JB_DEV', 'lsigma_cor', 'lML_JB_DEV', 'E_LSIGMA', 'E_LML_JB_DEV', 'e_lsigma', 'e_lMgb', 2.7, 0.0, -0.10, -0.15, 'log(σ)', 'log(M/Lb) [M/L]')
 lsigma.vs.logml <- ggplot() + theme_bw() +
   theme(
     panel.border = element_rect(fill = NA, colour = "black", size = 1),
