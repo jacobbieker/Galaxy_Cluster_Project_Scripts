@@ -136,6 +136,64 @@ add.tick.marks <- function(graph_to_add_ticks_to) {
   ######################
   
 }
+
+########################################################
+#
+# General Graph creating script
+#
+#########################################################
+
+create.graph <- function(rxj.data, one.hi.data, one.lo.data, two.hi.data, two.lo.data, coma.data, x.column, y.column, coma.x, coma.y, error.x, error.y, error.coma.x, error.coma.y, starting.x, starting.y, y.spacing, x.spacing, x.name, y.name) {
+  
+  # Starting values for plot
+  x.vs.y <- ggplot() + theme_bw() +
+    theme(
+      panel.border = element_rect(fill = NA, colour = "black", size = 1),
+      panel.grid = element_blank()
+    ) +
+    geom_point(data = rxj.data, aes(x = x.column, y = y.column), color = "gray", size=2) +
+    geom_point(data = rxj.data, aes(x = x.column, y = y.column), color = "black", size=2, shape=21) +
+    geom_point(data = one.hi.data, aes(x = x.column, y = y.column), color = "red", size=5) +
+    geom_point(data = one.hi.data, aes(x = x.column, y = y.column), color = "black", size=5, shape=21) +
+    geom_point(data = one.lo.data, aes(x = x.column, y = y.column), color = "red", size=2) +
+    geom_point(data = one.lo.data, aes(x = x.column, y = y.column), color = "black", size=2, shape=21) +
+    geom_point(data = two.hi.data, aes(x = x.column, y = y.column), color = "blue", size=5) +
+    geom_point(data = two.hi.data, aes(x = x.column, y = y.column), color = "black", size=5, shape=21) +
+    geom_point(data = two.lo.data, aes(x = x.column, y = y.column), color = "blue", size=2) +
+    geom_point(data = two.lo.data, aes(x = x.column, y = y.column), color = "black", size=2, shape=21) +
+    geom_point(data = coma.data, aes(x = coma.y, y = coma.y), color = "yellow", size=2) +
+    geom_point(data = coma.data, aes(x = coma.x, y = coma.y), color = "black", size=2, shape=21) +
+    xlab(x.name) +
+    ylab(y.name) +
+    # Change the tick marks
+    scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+    scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
+    # Coma Error Bar
+    geom_errorbarh(aes(y=starting.y, x=starting.x, xmin=starting.x - mean(coma.data$error.coma.x, na.rm = TRUE), xmax=starting.x + mean(coma.data$error.coma.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow") +
+    geom_errorbar(aes(x=starting.x, ymin=starting.y - mean(coma.data$error.coma.y, na.rm = TRUE), ymax=starting.y + mean(coma.data$error.coma.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow") +
+    # Sample 1 high redshift error
+    geom_errorbar(aes(x=starting.x, ymin=starting.y + y.spacing - mean(one.hi.data$error.y, na.rm = TRUE), ymax=starting.y + y.spacing + mean(one.hi.data$error.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+    geom_errorbarh(aes(y=starting.y + y.spacing, x=starting.x, xmin=starting.x - mean(one.hi.data$error.x, na.rm = TRUE), xmax=starting.x + mean(one.hi.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+    # Sample 1 low redshift error0
+    geom_errorbar(aes(x=starting.x + x.spacing, ymin=starting.y + y.spacing - mean(one.lo.data$error.y, na.rm = TRUE), ymax=starting.y + y.spacing + mean(one.lo.data$error.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+    geom_errorbarh(aes(y=starting.y + y.spacing, x=starting.x + x.spacing, xmin=starting.x + x.spacing - mean(one.lo.data$error.x, na.rm = TRUE), xmax=starting.x + x.spacing + mean(one.lo.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
+    
+    # Sample 2 high redshift error
+    geom_errorbar(aes(x=starting.x, ymin=starting.y - mean(two.hi.data$error.y, na.rm = TRUE), ymax=starting.y + mean(two.hi.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+    geom_errorbarh(aes(y=starting.y, x=starting.x, xmin=starting.x - mean(two.hi.data$error.x, na.rm = TRUE), xmax=starting.x + mean(two.hi.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+    # Sample 2 low redshift error
+    geom_errorbar(aes(x=starting.x+x.spacing, ymin=starting.y - mean(two.lo.data$error.y, na.rm = TRUE), ymax=starting.y + mean(two.lo.data$error.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+    geom_errorbarh(aes(y=starting.y, x=starting.x+x.spacing, xmin=starting.x+x.spacing - mean(two.lo.data$error.x, na.rm = TRUE), xmax=starting.x+x.spacing + mean(two.lo.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
+    
+    # RXJ error
+    geom_errorbar(aes(x=starting.x+x.spacing/2.0, ymin=starting.y + y.spacing/2.0 - mean(rxj.data$error.y, na.rm = TRUE), ymax=starting.y + y.spacing/2.0 + mean(rxj.data$error.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
+    geom_errorbarh(aes(y=starting.y + y.spacing/2.0, x=starting.x + x.spacing/2.0, xmin=starting.x+x.spacing/2.0 - mean(rxj.data$error.x, na.rm = TRUE), xmax=starting.x+x.spacing/2.0 + mean(rxj.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray")
+  
+  
+  add.tick.marks(x.vs.y)
+  
+}
+
 #########################################################
 #
 #   Go through whichever sheets are needed and graph
@@ -338,6 +396,7 @@ add.tick.marks(fundamental_plane_faceon)
 # Velocity Dispersion vs log M/L
 ##################
 
+create.graph(RXJ, field.sample.one.HIRDSHFT.data, field.sample.one.LORDSHFT.data, field.sample.two.HIRDSHFT.data, field.sample.two.LORDSHFT.data, coma.data, 'LSIGMA_COR', 'LML_JB_DEV', 'lsigma_cor', 'lML_JB_DEV', 'E_LSIGMA', 'E_LML_JB_DEV', 'e_lsigma', 'e_lMgb', 2.7, 0.0, -0.10, -0.15, 'log(σ)', 'log(M/Lb) [M/L]')
 lsigma.vs.logml <- ggplot() + theme_bw() +
   theme(
     panel.border = element_rect(fill = NA, colour = "black", size = 1),
@@ -450,6 +509,9 @@ coma.data$lm_vs_lml_weights <- (abs(0.24*coma.data$lMass_DEV + coma.data$lML_JB_
 # Starting values for plot
 starting.x <- 11.3
 starting.y <- 1.5
+y.spacing <- 0.3
+x.spacing <- 0.3
+
 lm.vs.lsigma <- ggplot() + theme_bw() +
   theme(
     panel.border = element_rect(fill = NA, colour = "black", size = 1),
