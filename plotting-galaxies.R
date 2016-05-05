@@ -151,49 +151,46 @@ create.graph <- function(rxj.data, one.hi.data, one.lo.data, two.hi.data, two.lo
       panel.border = element_rect(fill = NA, colour = "black", size = 1),
       panel.grid = element_blank()
     ) +
-    geom_point(data = rxj.data, aes(x = x.column, y = y.column), color = "gray", size=2) +
-    geom_point(data = rxj.data, aes(x = x.column, y = y.column), color = "black", size=2, shape=21) +
-    geom_point(data = one.hi.data, aes(x = x.column, y = y.column), color = "red", size=5) +
-    geom_point(data = one.hi.data, aes(x = x.column, y = y.column), color = "black", size=5, shape=21) +
-    geom_point(data = one.lo.data, aes(x = x.column, y = y.column), color = "red", size=2) +
-    geom_point(data = one.lo.data, aes(x = x.column, y = y.column), color = "black", size=2, shape=21) +
-    geom_point(data = two.hi.data, aes(x = x.column, y = y.column), color = "blue", size=5) +
-    geom_point(data = two.hi.data, aes(x = x.column, y = y.column), color = "black", size=5, shape=21) +
-    geom_point(data = two.lo.data, aes(x = x.column, y = y.column), color = "blue", size=2) +
-    geom_point(data = two.lo.data, aes(x = x.column, y = y.column), color = "black", size=2, shape=21) +
-    geom_point(data = coma.data, aes(x = coma.y, y = coma.y), color = "yellow", size=2) +
-    geom_point(data = coma.data, aes(x = coma.x, y = coma.y), color = "black", size=2, shape=21) +
+    geom_point(aes(x = rxj.data[,x.column], y =rxj.data[,y.column]), color = "gray", size=2) +
+    geom_point(data = rxj.data, aes(x = rxj.data[,x.column], y = rxj.data[,y.column]), color = "black", size=2, shape=21) +
+    geom_point(aes(x = one.hi.data[,x.column], y = one.hi.data[,y.column]), color = "red", size=5) +
+    geom_point(aes(x = one.hi.data[,x.column], y = one.hi.data[,y.column]), color = "black", size=5, shape=21) +
+    geom_point(aes(x = one.lo.data[,x.column], y = one.lo.data[,y.column]), color = "red", size=2) +
+    geom_point(aes(x = one.lo.data[,x.column], y = one.lo.data[,y.column]), color = "black", size=2, shape=21) +
+    geom_point(aes(x = two.hi.data[,x.column], y = two.hi.data[,y.column]), color = "blue", size=5) +
+    geom_point(aes(x = two.hi.data[,x.column], y = two.hi.data[,y.column]), color = "black", size=5, shape=21) +
+    geom_point(aes(x = two.lo.data[,x.column], y = two.lo.data[,y.column]), color = "blue", size=2) +
+    geom_point(aes(x = two.lo.data[,x.column], y = two.lo.data[,y.column]), color = "black", size=2, shape=21) +
+    geom_point(aes(x = coma.data[,coma.x], y = coma.data[,coma.y]), color = "yellow", size=2) +
+    geom_point(aes(x = coma.data[,coma.x], y = coma.data[,coma.y]), color = "black", size=2, shape=21) +
     xlab(x.name) +
     ylab(y.name) +
     # Change the tick marks
     scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
     scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-    # Coma Error Bar
-    geom_errorbarh(aes(y=starting.y, x=starting.x, xmin=starting.x - mean(coma.data$error.coma.x, na.rm = TRUE), xmax=starting.x + mean(coma.data$error.coma.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow") +
-    geom_errorbar(aes(x=starting.x, ymin=starting.y - mean(coma.data$error.coma.y, na.rm = TRUE), ymax=starting.y + mean(coma.data$error.coma.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow") +
-    # Sample 1 high redshift error
-    geom_errorbar(aes(x=starting.x, ymin=starting.y + y.spacing - mean(one.hi.data$error.y, na.rm = TRUE), ymax=starting.y + y.spacing + mean(one.hi.data$error.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-    geom_errorbarh(aes(y=starting.y + y.spacing, x=starting.x, xmin=starting.x - mean(one.hi.data$error.x, na.rm = TRUE), xmax=starting.x + mean(one.hi.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+     # Sample 1 high redshift error
+    geom_errorbar(aes(x=starting.x, ymin=starting.y + y.spacing - mean(one.hi.data[,error.y], na.rm = TRUE), ymax=starting.y + y.spacing + mean(one.hi.data[,error.y], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+    geom_errorbarh(aes(y=starting.y + y.spacing, x=starting.x, xmin=starting.x - mean(one.hi.data[,error.x], na.rm = TRUE), xmax=starting.x + mean(one.hi.data[,error.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
     # Sample 1 low redshift error0
-    geom_errorbar(aes(x=starting.x + x.spacing, ymin=starting.y + y.spacing - mean(one.lo.data$error.y, na.rm = TRUE), ymax=starting.y + y.spacing + mean(one.lo.data$error.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-    geom_errorbarh(aes(y=starting.y + y.spacing, x=starting.x + x.spacing, xmin=starting.x + x.spacing - mean(one.lo.data$error.x, na.rm = TRUE), xmax=starting.x + x.spacing + mean(one.lo.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
+    geom_errorbar(aes(x=starting.x + x.spacing, ymin=starting.y + y.spacing - mean(one.lo.data[,error.y], na.rm = TRUE), ymax=starting.y + y.spacing + mean(one.lo.data[,error.y], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
+    geom_errorbarh(aes(y=starting.y + y.spacing, x=starting.x + x.spacing, xmin=starting.x + x.spacing - mean(one.lo.data[,error.x], na.rm = TRUE), xmax=starting.x + x.spacing + mean(one.lo.data[,error.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
     
     # Sample 2 high redshift error
-    geom_errorbar(aes(x=starting.x, ymin=starting.y - mean(two.hi.data$error.y, na.rm = TRUE), ymax=starting.y + mean(two.hi.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-    geom_errorbarh(aes(y=starting.y, x=starting.x, xmin=starting.x - mean(two.hi.data$error.x, na.rm = TRUE), xmax=starting.x + mean(two.hi.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+    geom_errorbar(aes(x=starting.x, ymin=starting.y - mean(two.hi.data[,error.y], na.rm = TRUE), ymax=starting.y + mean(two.hi.data[,error.y], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+    geom_errorbarh(aes(y=starting.y, x=starting.x, xmin=starting.x - mean(two.hi.data[,error.x], na.rm = TRUE), xmax=starting.x + mean(two.hi.data[,error.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
     # Sample 2 low redshift error
-    geom_errorbar(aes(x=starting.x+x.spacing, ymin=starting.y - mean(two.lo.data$error.y, na.rm = TRUE), ymax=starting.y + mean(two.lo.data$error.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-    geom_errorbarh(aes(y=starting.y, x=starting.x+x.spacing, xmin=starting.x+x.spacing - mean(two.lo.data$error.x, na.rm = TRUE), xmax=starting.x+x.spacing + mean(two.lo.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
-    
+    geom_errorbar(aes(x=starting.x+x.spacing, ymin=starting.y - mean(two.lo.data[,error.y], na.rm = TRUE), ymax=starting.y + mean(two.lo.data[,error.y], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
+    geom_errorbarh(aes(y=starting.y, x=starting.x+x.spacing, xmin=starting.x+x.spacing - mean(two.lo.data[,error.x], na.rm = TRUE), xmax=starting.x+x.spacing + mean(two.lo.data[,error.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
     # RXJ error
-    geom_errorbar(aes(x=starting.x+x.spacing/2.0, ymin=starting.y + y.spacing/2.0 - mean(rxj.data$error.y, na.rm = TRUE), ymax=starting.y + y.spacing/2.0 + mean(rxj.data$error.y, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
-    geom_errorbarh(aes(y=starting.y + y.spacing/2.0, x=starting.x + x.spacing/2.0, xmin=starting.x+x.spacing/2.0 - mean(rxj.data$error.x, na.rm = TRUE), xmax=starting.x+x.spacing/2.0 + mean(rxj.data$error.x, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray")
-  
-  
-  add.tick.marks(x.vs.y)
-  
+    geom_errorbar(aes(x=starting.x+x.spacing/2.0, ymin=starting.y + y.spacing/2.0 - mean(rxj.data[,error.y], na.rm = TRUE), ymax=starting.y + y.spacing/2.0 + mean(rxj.data[,error.y], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
+    geom_errorbarh(aes(y=starting.y + y.spacing/2.0, x=starting.x + x.spacing/2.0, xmin=starting.x+x.spacing/2.0 - mean(rxj.data[,error.x], na.rm = TRUE), xmax=starting.x+x.spacing/2.0 + mean(rxj.data[,error.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
+    
+    # Coma Error Bar
+    if (!is.data.frame(coma.data[,error.coma.x])){
+      geom_errorbarh(aes(y=starting.y, x=starting.x, xmin=starting.x - mean(coma.data[,error.coma.x], na.rm = TRUE), xmax=starting.x + mean(coma.data[,error.coma.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow") +
+      geom_errorbar(aes(x=starting.x, ymin=starting.y - mean(coma.data[,error.coma.y], na.rm = TRUE), ymax=starting.y + mean(coma.data[,error.coma.y], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow")
+    }
 }
-
 #########################################################
 #
 #   Go through whichever sheets are needed and graph
@@ -396,53 +393,9 @@ add.tick.marks(fundamental_plane_faceon)
 # Velocity Dispersion vs log M/L
 ##################
 
-#create.graph(RXJ, field.sample.one.HIRDSHFT.data, field.sample.one.LORDSHFT.data, field.sample.two.HIRDSHFT.data, field.sample.two.LORDSHFT.data, coma.data, 'LSIGMA_COR', 'LML_JB_DEV', 'lsigma_cor', 'lML_JB_DEV', 'E_LSIGMA', 'E_LML_JB_DEV', 'e_lsigma', 'e_lMgb', 2.7, 0.0, -0.10, -0.15, 'log(σ)', 'log(M/Lb) [M/L]')
-lsigma.vs.logml <- ggplot() + theme_bw() +
-  theme(
-    panel.border = element_rect(fill = NA, colour = "black", size = 1),
-    panel.grid = element_blank()
-  ) +
-  geom_point(data = RXJ, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "gray", size=2) +
-  geom_point(data = RXJ, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "black", size=2, shape=21) +
-  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "red", size=5) +
-  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "black", size=5, shape=21) +
-  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "red", size=2) +
-  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "black", size=2, shape=21) +
-  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "blue", size=5) +
-  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "black", size=5, shape=21) +
-  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "blue", size=2) +
-  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LSIGMA_COR, y = LML_JB_DEV), color = "black", size=2, shape=21) +
-  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "yellow", size=2) +
-  geom_point(data = coma.data, aes(x = lsigma_cor, y = lML_JB_DEV), color = "black", size=2, shape=21) +
-  xlab('log(σ)') +
-  ylab('log(M/Lb) [M/L]') +
-  # Currently calculated by coef(lm(data=coma.data, lML_JB_DEV ~ lsigma_cor)) slope: 1.07*log(sigma), -1.560
-  geom_abline(intercept = -0.8569, slope=0.7535) +
-  # Change the tick marks
-  scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-  # Coma Error Bar
-  geom_errorbarh(aes(y=-0.3, x=2.7, xmin=2.7 - mean(coma.data$e_lsigma, na.rm = TRUE), xmax=2.7 + mean(coma.data$e_lsigma, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow") +
-  geom_errorbar(aes(x=2.7, ymin=-0.3 - mean(coma.data$e_lMgb, na.rm = TRUE), ymax=-0.3 + mean(coma.data$e_lMgb, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow") +
-  # Sample 1 high redshift error
-  geom_errorbar(aes(x=2.55, ymin=-0.3 - mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=-0.3 + mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  geom_errorbarh(aes(y=-0.3, x=2.55, xmin=2.55 - mean(field.sample.one.HIRDSHFT.data$E_LSIGMA, na.rm = TRUE), xmax=2.55 + mean(field.sample.one.HIRDSHFT.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  # Sample 1 low redshift error0
-  geom_errorbar(aes(x=2.7, ymin=0.0 - mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  geom_errorbarh(aes(y=0.0, x=2.7, xmin=2.7 - mean(field.sample.one.LORDSHFT.data$E_LSIGMA, na.rm = TRUE), xmax=2.7 + mean(field.sample.one.LORDSHFT.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
-  
-  # Sample 2 high redshift error
-  geom_errorbar(aes(x=2.55, ymin=0.0 - mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=0.0, x=2.55, xmin=2.55 - mean(field.sample.two.HIRDSHFT.data$E_LSIGMA, na.rm = TRUE), xmax=2.55 + mean(field.sample.one.HIRDSHFT.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  # Sample 2 low redshift error
-  geom_errorbar(aes(x=2.65, ymin=0.3 - mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.3 + mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=0.3, x=2.65, xmin=2.65 - mean(field.sample.two.LORDSHFT.data$E_LSIGMA, na.rm = TRUE), xmax=2.65 + mean(field.sample.two.LORDSHFT.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
-
-  # RXJ error
-  geom_errorbar(aes(x=2.50, ymin=0.3 - mean(RXJ$E_LML_JB_DEV, na.rm = TRUE), ymax=0.3 + mean(RXJ$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
-  geom_errorbarh(aes(y=0.3, x=2.50, xmin=2.50 - mean(RXJ$E_LSIGMA, na.rm = TRUE), xmax=2.50 + mean(RXJ$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray")
-
-
+lsigma.vs.logml <- create.graph(RXJ, field.sample.one.HIRDSHFT.data, field.sample.one.LORDSHFT.data, field.sample.two.HIRDSHFT.data, field.sample.two.LORDSHFT.data, coma.data, 'LSIGMA_COR', 'LML_JB_DEV', 'lsigma_cor', 'lML_JB_DEV', 'E_LSIGMA', 'E_LML_JB_DEV', 'e_lsigma', 'e_lMgb', 2.7, -0.2, -0.26, -0.15, 'log(σ)', 'log(M/Lb) [M/L]')
+# Currently calculated by coef(lm(data=coma.data, lML_JB_DEV ~ lsigma_cor)) slope: 1.07*log(sigma), -1.560
+lsigma.vs.logml <- lsigma.vs.logml + geom_abline(intercept = -0.8569, slope=0.7535)
 add.tick.marks(lsigma.vs.logml)
 
 ###############################
@@ -451,52 +404,10 @@ add.tick.marks(lsigma.vs.logml)
 
 # Getting the weights for the rq value
 coma.data$lm_vs_lml_weights <- (abs(0.24*coma.data$lMass_DEV + coma.data$lML_JB_DEV + 1.754))/(sqrt(0.24^2+1))
-# Starting values for plot
-starting.x <- 12.3
 
-lm.vs.logml <- ggplot() + theme_bw() +
-  theme(
-    panel.border = element_rect(fill = NA, colour = "black", size = 1),
-    panel.grid = element_blank()
-  ) +
-  geom_point(data = RXJ, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "gray", size=2) +
-  geom_point(data = RXJ, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=2, shape=21) +
-  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "red", size=5) +
-  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=5, shape=21) +
-  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "red", size=2) +
-  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=2, shape=21) +
-  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "blue", size=5) +
-  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=5, shape=21) +
-  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "blue", size=2) +
-  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LMASS_DEV, y = LML_JB_DEV), color = "black", size=2, shape=21) +
-  geom_point(data = coma.data, aes(x = lMass_DEV, y = lML_JB_DEV), color = "yellow", size=2) +
-  geom_point(data = coma.data, aes(x = lMass_DEV, y = lML_JB_DEV), color = "black", size=2, shape=21) +
-  xlab('log(Mass)') +
-  ylab('log(M/Lb) [M/L]') +
-  # Calcuated by quantreg's rq(coma.data$lML_JB_DEV ~ coma.data$lMass_DEV)
-  geom_abline(intercept = -1.6587, slope = 0.2262) +
-  # Change the tick marks
-  scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-  # Sample 1 high redshift error
-  geom_errorbar(aes(x=starting.x, ymin=-0.3 - mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=-0.3 + mean(field.sample.one.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  geom_errorbarh(aes(y=-0.3, x=starting.x, xmin=starting.x - mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  # Sample 1 low redshift error0
-  geom_errorbar(aes(x=starting.x - 0.3, ymin=-0.3 - mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=-0.3 + mean(field.sample.one.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  geom_errorbarh(aes(y=-0.3, x=starting.x - 0.3, xmin=starting.x-0.3 - mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x - 0.3 + mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
-  
-  # Sample 2 high redshift error
-  geom_errorbar(aes(x=starting.x, ymin=0.0 - mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.two.HIRDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=0.0, x=starting.x, xmin=starting.x - mean(field.sample.two.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  # Sample 2 low redshift error
-  geom_errorbar(aes(x=starting.x-0.3, ymin=0.0 - mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), ymax=0.0 + mean(field.sample.two.LORDSHFT.data$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=0.0, x=starting.x-0.3, xmin=starting.x-0.3 - mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.3 + mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
-
-  # RXJ error
-  geom_errorbar(aes(x=starting.x+0.2, ymin=-0.15 - mean(RXJ$E_LML_JB_DEV, na.rm = TRUE), ymax=-0.15 + mean(RXJ$E_LML_JB_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
-  geom_errorbarh(aes(y=-0.15, x=starting.x+0.2, xmin=starting.x+0.2 - mean(RXJ$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x+0.2 + mean(RXJ$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray")
-
-
+lm.vs.logml <- create.graph(RXJ, field.sample.one.HIRDSHFT.data, field.sample.one.LORDSHFT.data, field.sample.two.HIRDSHFT.data, field.sample.two.LORDSHFT.data, coma.data, 'LMASS_DEV', 'LML_JB_DEV', 'lMass_DEV', 'lML_JB_DEV', 'E_LMASS_DEV', 'E_LML_JB_DEV', '', 'e_lMgb', 2.7, -0.2, -0.26, -0.15, 'log(Mass)', 'log(M/Lb) [M/L]')
+# Calcuated by quantreg's rq(coma.data$lML_JB_DEV ~ coma.data$lMass_DEV)
+lm.vs.logml <- lm.vs.logml + geom_abline(intercept = -1.6587, slope = 0.2262)
 add.tick.marks(lm.vs.logml)
 
 
