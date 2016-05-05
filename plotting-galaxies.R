@@ -183,13 +183,11 @@ create.graph <- function(rxj.data, one.hi.data, one.lo.data, two.hi.data, two.lo
     geom_errorbarh(aes(y=starting.y, x=starting.x+x.spacing, xmin=starting.x+x.spacing - mean(two.lo.data[,error.x], na.rm = TRUE), xmax=starting.x+x.spacing + mean(two.lo.data[,error.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
     # RXJ error
     geom_errorbar(aes(x=starting.x+x.spacing/2.0, ymin=starting.y + y.spacing/2.0 - mean(rxj.data[,error.y], na.rm = TRUE), ymax=starting.y + y.spacing/2.0 + mean(rxj.data[,error.y], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
-    geom_errorbarh(aes(y=starting.y + y.spacing/2.0, x=starting.x + x.spacing/2.0, xmin=starting.x+x.spacing/2.0 - mean(rxj.data[,error.x], na.rm = TRUE), xmax=starting.x+x.spacing/2.0 + mean(rxj.data[,error.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
+    geom_errorbarh(aes(y=starting.y + y.spacing/2.0, x=starting.x + x.spacing/2.0, xmin=starting.x+x.spacing/2.0 - mean(rxj.data[,error.x], na.rm = TRUE), xmax=starting.x+x.spacing/2.0 + mean(rxj.data[,error.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray")
     
     # Coma Error Bar
-    if (!is.data.frame(coma.data[,error.coma.x])){
-      geom_errorbarh(aes(y=starting.y, x=starting.x, xmin=starting.x - mean(coma.data[,error.coma.x], na.rm = TRUE), xmax=starting.x + mean(coma.data[,error.coma.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow") +
-      geom_errorbar(aes(x=starting.x, ymin=starting.y - mean(coma.data[,error.coma.y], na.rm = TRUE), ymax=starting.y + mean(coma.data[,error.coma.y], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow")
-    }
+    #geom_errorbarh(aes(y=starting.y + y.spacing/4.0, x=starting.x + x.spacing/2.0, xmin=starting.x +x.spacing/2.0 - mean(coma.data[,error.coma.x], na.rm = TRUE), xmax=starting.x + x.spacing/2.0 + mean(coma.data[,error.coma.x], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow") +
+    #geom_errorbar(aes(x=starting.x + x.spacing/2.0, ymin=starting.y + y.spacing/4.0 - mean(coma.data[,error.coma.y], na.rm = TRUE), ymax=starting.y + y.spacing/4.0 + mean(coma.data[,error.coma.y], na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="yellow")
 }
 #########################################################
 #
@@ -404,8 +402,7 @@ add.tick.marks(lsigma.vs.logml)
 
 # Getting the weights for the rq value
 coma.data$lm_vs_lml_weights <- (abs(0.24*coma.data$lMass_DEV + coma.data$lML_JB_DEV + 1.754))/(sqrt(0.24^2+1))
-
-lm.vs.logml <- create.graph(RXJ, field.sample.one.HIRDSHFT.data, field.sample.one.LORDSHFT.data, field.sample.two.HIRDSHFT.data, field.sample.two.LORDSHFT.data, coma.data, 'LMASS_DEV', 'LML_JB_DEV', 'lMass_DEV', 'lML_JB_DEV', 'E_LMASS_DEV', 'E_LML_JB_DEV', '', 'e_lMgb', 2.7, -0.2, -0.26, -0.15, 'log(Mass)', 'log(M/Lb) [M/L]')
+lm.vs.logml <- create.graph(RXJ, field.sample.one.HIRDSHFT.data, field.sample.one.LORDSHFT.data, field.sample.two.HIRDSHFT.data, field.sample.two.LORDSHFT.data, coma.data, 'LMASS_DEV', 'LML_JB_DEV', 'lMass_DEV', 'lML_JB_DEV', 'E_LMASS_DEV', 'E_LML_JB_DEV', 'e_lsigma', 'e_lMgb', 12.3, -0.2, -0.26, -0.15, 'log(Mass)', 'log(M/Lb) [M/L]')
 # Calcuated by quantreg's rq(coma.data$lML_JB_DEV ~ coma.data$lMass_DEV)
 lm.vs.logml <- lm.vs.logml + geom_abline(intercept = -1.6587, slope = 0.2262)
 add.tick.marks(lm.vs.logml)
