@@ -414,55 +414,9 @@ add.tick.marks(lm.vs.logml)
 
 # Getting the weights for the rq value
 coma.data$lm_vs_lml_weights <- (abs(0.24*coma.data$lMass_DEV + coma.data$lML_JB_DEV + 1.754))/(sqrt(0.24^2+1))
-# Starting values for plot
-starting.x <- 11.3
-starting.y <- 1.5
-y.spacing <- 0.3
-x.spacing <- 0.3
 
-lm.vs.lsigma <- ggplot() + theme_bw() +
-  theme(
-    panel.border = element_rect(fill = NA, colour = "black", size = 1),
-    panel.grid = element_blank()
-  ) +
-  geom_point(data = RXJ, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "gray", size=2) +
-  geom_point(data = RXJ, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "black", size=2, shape=21) +
-  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "red", size=5) +
-  geom_point(data = field.sample.one.HIRDSHFT.data, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "black", size=5, shape=21) +
-  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "red", size=2) +
-  geom_point(data = field.sample.one.LORDSHFT.data, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "black", size=2, shape=21) +
-  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "blue", size=5) +
-  geom_point(data = field.sample.two.HIRDSHFT.data, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "black", size=5, shape=21) +
-  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "blue", size=2) +
-  geom_point(data = field.sample.two.LORDSHFT.data, aes(x = LMASS_DEV, y = LSIGMA_COR), color = "black", size=2, shape=21) +
-  geom_point(data = coma.data, aes(x = lMass_DEV, y = lsigma_cor), color = "yellow", size=2) +
-  geom_point(data = coma.data, aes(x = lMass_DEV, y = lsigma_cor), color = "black", size=2, shape=21) +
-  xlab('log(Mass)') +
-  ylab('log(sigma)') +
-  # Calcuated by quantreg's rq(coma.data$lML_JB_DEV ~ coma.data$lMass_DEV)
-  #geom_abline(intercept = -1.6587, slope = 0.2262) +
-  # Change the tick marks
-  scale_x_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-  scale_y_continuous(breaks = pretty_breaks(n=10), minor_breaks = waiver()) +
-  # Sample 1 high redshift error
-  geom_errorbar(aes(x=starting.x, ymin=starting.y -0.3 - mean(field.sample.one.HIRDSHFT.data$E_LSIGMA, na.rm = TRUE), ymax=starting.y - 0.3 + mean(field.sample.one.HIRDSHFT.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  geom_errorbarh(aes(y=starting.y - 0.3, x=starting.x, xmin=starting.x - mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  # Sample 1 low redshift error0
-  geom_errorbar(aes(x=starting.x - 0.3, ymin=starting.y -0.3 - mean(field.sample.one.LORDSHFT.data$E_LSIGMA, na.rm = TRUE), ymax=starting.y -0.3 + mean(field.sample.one.LORDSHFT.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="red") +
-  geom_errorbarh(aes(y=starting.y - 0.3, x=starting.x - 0.3, xmin=starting.x-0.3 - mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x - 0.3 + mean(field.sample.one.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
-  
-  # Sample 2 high redshift error
-  geom_errorbar(aes(x=starting.x, ymin=starting.y - mean(field.sample.two.HIRDSHFT.data$E_LSIGMA, na.rm = TRUE), ymax=starting.y + mean(field.sample.two.HIRDSHFT.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=starting.y, x=starting.x, xmin=starting.x - mean(field.sample.two.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x + mean(field.sample.one.HIRDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  # Sample 2 low redshift error
-  geom_errorbar(aes(x=starting.x-0.3, ymin=starting.y - mean(field.sample.two.LORDSHFT.data$E_LSIGMA, na.rm = TRUE), ymax=starting.y + mean(field.sample.two.LORDSHFT.data$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="blue") +
-  geom_errorbarh(aes(y=starting.y, x=starting.x-0.3, xmin=starting.x-0.3 - mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x-0.3 + mean(field.sample.two.LORDSHFT.data$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="black") +
-  
-  # RXJ error
-  geom_errorbar(aes(x=starting.x+0.2, ymin=starting.y -0.15 - mean(RXJ$E_LSIGMA, na.rm = TRUE), ymax=starting.y -0.15 + mean(RXJ$E_LSIGMA, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray") +
-  geom_errorbarh(aes(y=starting.y -0.15, x=starting.x+0.2, xmin=starting.x+0.2 - mean(RXJ$E_LMASS_DEV, na.rm = TRUE), xmax=starting.x+0.2 + mean(RXJ$E_LMASS_DEV, na.rm = TRUE), width = error.bar.end.length, height=error.bar.end.length), color="gray")
-
-
+lm.vs.lsigma <- create.graph(RXJ, field.sample.one.HIRDSHFT.data, field.sample.one.LORDSHFT.data, field.sample.two.HIRDSHFT.data, field.sample.two.LORDSHFT.data, coma.data, 'LMASS_DEV', 'LSIGMA_COR', 'lMass_DEV', 'lsigma_cor', 'E_LMASS_DEV', 'E_LSIGMA', '', '', 12.5, 2.2, -0.15, -0.3, 'log(Mass)', 'log(σ)')
+lm.vs.lsigma <- lm.vs.lsigma # + geom_abline(intercept = 1.9587, slope = 0.2262)
 add.tick.marks(lm.vs.lsigma)
 
 ##########################################
