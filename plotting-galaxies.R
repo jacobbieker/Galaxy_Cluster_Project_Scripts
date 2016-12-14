@@ -120,13 +120,13 @@ coma.sigma <- spectrophotometric_data$Coma$lsigma_cor
 
 fundamental.plane <- scatterplot3d(field.one.LO.sigma, field.one.LO.ie, field.one.LO.re, angle = 135, 
               xlab = "Log Sigma", ylab = "Log Ie", zlab = "Log Re", main = "Fundamental Plane",
-              color = "red", type = "p", pch = 16, cex.symbols = 0.6,
+              color = "red", type = "p", pch = 16, cex.symbols = 1.3,
               xlim = c(0.5, 2.1), ylim = c(-2, 2), zlim = c(0, 2.2),
               axis = TRUE, tick.marks = TRUE, box = TRUE)
-fundamental.plane$points3d(coma.sigma, coma.ie, coma.re, col="yellow", type="p", pch=16, cex=0.5)
-fundamental.plane$points3d(field.one.HI.sigma, field.one.HI.ie, field.one.HI.re, col="red", type="p", pch=16)
-fundamental.plane$points3d(field.two.HI.sigma, field.two.HI.ie, field.two.HI.re, col="blue", type="p", pch=16)
-fundamental.plane$points3d(field.two.LO.sigma, field.two.LO.ie, field.two.LO.re, col="blue", type="p", pch=16, cex = 0.6)
+fundamental.plane$points3d(coma.sigma, coma.ie, coma.re, col="yellow", type="p", pch=20, cex=1.2)
+fundamental.plane$points3d(field.one.HI.sigma, field.one.HI.ie, field.one.HI.re, col="red", type="p", pch=20, cex = 1.5)
+fundamental.plane$points3d(field.two.HI.sigma, field.two.HI.ie, field.two.HI.re, col="blue", type="p", pch=20, cex = 1.5)
+fundamental.plane$points3d(field.two.LO.sigma, field.two.LO.ie, field.two.LO.re, col="blue", type="p", pch=20, cex = 1.3)
 
 
 "
